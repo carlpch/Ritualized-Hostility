@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ritualized Hostility</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Ritualized Hostility">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Ritualized Hostility" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ritualized Hostility" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="time-series-modeling.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="setup-data-structure.html"><a href="setup-data-structure.html"><i class="fa fa-check"></i><b>1</b> Setup &amp; Data Structure</a><ul>
+<li class="chapter" data-level="1.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#cameo-coding-scheme"><i class="fa fa-check"></i><b>1.1</b> CAMEO Coding Scheme</a></li>
+<li class="chapter" data-level="1.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#reading-icews-raw-data"><i class="fa fa-check"></i><b>1.2</b> Reading ICEWS Raw Data</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#icews-parser-function"><i class="fa fa-check"></i><b>1.2.1</b> ICEWS Parser Function</a></li>
+<li class="chapter" data-level="1.2.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#data-for-replication"><i class="fa fa-check"></i><b>1.2.2</b> Data for Replication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="setup-data-structure.html"><a href="setup-data-structure.html#distribution-of-data-over-year"><i class="fa fa-check"></i><b>1.3</b> Distribution of Data over Year</a></li>
+<li class="chapter" data-level="1.4" data-path="setup-data-structure.html"><a href="setup-data-structure.html#using-stata"><i class="fa fa-check"></i><b>1.4</b> Using STATA</a></li>
+<li class="chapter" data-level="1.5" data-path="setup-data-structure.html"><a href="setup-data-structure.html#distribution-of-event-categories"><i class="fa fa-check"></i><b>1.5</b> Distribution of Event Categories</a></li>
+<li class="chapter" data-level="1.6" data-path="setup-data-structure.html"><a href="setup-data-structure.html#daily-data"><i class="fa fa-check"></i><b>1.6</b> Daily Data</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#summary-statistics"><i class="fa fa-check"></i><b>1.6.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="1.6.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#time-series-across-categories-daily"><i class="fa fa-check"></i><b>1.6.2</b> Time Series Across Categories (Daily)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="setup-data-structure.html"><a href="setup-data-structure.html#the-first-difference-of-time-series-across-categories-daily"><i class="fa fa-check"></i><b>1.6.3</b> The “First Difference” of Time Series Across Categories (Daily)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="setup-data-structure.html"><a href="setup-data-structure.html#weekly-data"><i class="fa fa-check"></i><b>1.7</b> Weekly Data</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#data-structure"><i class="fa fa-check"></i><b>1.7.1</b> Data Structure</a></li>
+<li class="chapter" data-level="1.7.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#time-series-across-categories-weekly"><i class="fa fa-check"></i><b>1.7.2</b> Time Series Across Categories (Weekly)</a></li>
+<li class="chapter" data-level="1.7.3" data-path="setup-data-structure.html"><a href="setup-data-structure.html#summary-statistics-1"><i class="fa fa-check"></i><b>1.7.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="time-series-modeling.html"><a href="time-series-modeling.html"><i class="fa fa-check"></i><b>2</b> Time Series Modeling</a><ul>
+<li class="chapter" data-level="2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#unit-root-test"><i class="fa fa-check"></i><b>2.1</b> Unit Root Test</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-stationary"><i class="fa fa-check"></i><b>2.1.1</b> Verbal Conflict (Stationary)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-stationary"><i class="fa fa-check"></i><b>2.1.2</b> Verbal Cooperation (Stationary)</a></li>
+<li class="chapter" data-level="2.1.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-stationary"><i class="fa fa-check"></i><b>2.1.3</b> Material Conflict (Stationary)</a></li>
+<li class="chapter" data-level="2.1.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-stationary"><i class="fa fa-check"></i><b>2.1.4</b> Material Cooperation (Stationary)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#specifying-autoregression-moving-average-arma"><i class="fa fa-check"></i><b>2.2</b> Specifying AutoRegression &amp; Moving Average (ARMA)</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-arma-17"><i class="fa fa-check"></i><b>2.2.1</b> Verbal Conflict (ARMA 1,7?)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-arma-1"><i class="fa fa-check"></i><b>2.2.2</b> Verbal Cooperation (ARMA 1)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-arima-101"><i class="fa fa-check"></i><b>2.2.3</b> Material Conflict (ARIMA 1,0,1)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-arima-101"><i class="fa fa-check"></i><b>2.2.4</b> Material Cooperation (ARIMA 1,0,1)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html"><i class="fa fa-check"></i><b>3</b> Vector Autoregression (VAR)</a><ul>
+<li class="chapter" data-level="3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#model-presentation"><i class="fa fa-check"></i><b>3.1</b> Model Presentation</a></li>
+<li class="chapter" data-level="3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#selecting-lags-for-var"><i class="fa fa-check"></i><b>3.2</b> Selecting Lags for VAR</a></li>
+<li class="chapter" data-level="3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-causality-test"><i class="fa fa-check"></i><b>3.3</b> Granger Causality Test</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Granger: Model 1</a></li>
+<li class="chapter" data-level="3.3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-2"><i class="fa fa-check"></i><b>3.3.2</b> Granger: Model 2</a></li>
+<li class="chapter" data-level="3.3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-3"><i class="fa fa-check"></i><b>3.3.3</b> Granger: Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-1"><i class="fa fa-check"></i><b>3.4</b> IRF Model 1</a></li>
+<li class="chapter" data-level="3.5" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-2"><i class="fa fa-check"></i><b>3.5</b> IRF Model 2</a></li>
+<li class="chapter" data-level="3.6" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-3"><i class="fa fa-check"></i><b>3.6</b> IRF Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="arimax.html"><a href="arimax.html"><i class="fa fa-check"></i><b>4</b> ARIMAX</a><ul>
+<li class="chapter" data-level="4.1" data-path="arimax.html"><a href="arimax.html#bilateral-events-as-schocks"><i class="fa fa-check"></i><b>4.1</b> Bilateral Events as “Schocks”</a></li>
+<li class="chapter" data-level="4.2" data-path="arimax.html"><a href="arimax.html#arimax-1"><i class="fa fa-check"></i><b>4.2</b> ARIMAX</a></li>
+<li class="chapter" data-level="4.3" data-path="arimax.html"><a href="arimax.html#directional-arimax"><i class="fa fa-check"></i><b>4.3</b> Directional ARIMAX</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="arimax.html"><a href="arimax.html#korea-to-japan"><i class="fa fa-check"></i><b>4.3.1</b> Korea to Japan</a></li>
+<li class="chapter" data-level="4.3.2" data-path="arimax.html"><a href="arimax.html#japan-to-korea"><i class="fa fa-check"></i><b>4.3.2</b> Japan to Korea</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ritualized Hostility</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Ritualized Hostility</h1>
+</div>
+<div id="setup-data-structure" class="section level1">
+<h1><span class="header-section-number">1</span> Setup &amp; Data Structure</h1>
+<div id="cameo-coding-scheme" class="section level2">
+<h2><span class="header-section-number">1.1</span> CAMEO Coding Scheme</h2>
+<p>To translate CAMEO coding scheme into four more general categories, I rely on the mapping below for recoding.</p>
+<p>Because the entire volume of ICEWS is huge, I use the latest IECWS data (2017 January) <code>events.2016.20170206134701.tab</code> to test the steps of data manipulation before fully implementing all the methods.</p>
+<p>I did the following tasks:</p>
+<ul>
+<li>Selecte only events which Japan or South Korea was the source or target.</li>
+<li>Eliminate purely domestic events where Japan or South Korea were both the Source Country and the Target Country.</li>
+<li>Recode the <code>CAMEO</code> Code into 4 categories with the mapping shown above.</li>
+<li>Make<code>category</code> (0,1,2,3,4) a factor variable and <code>time</code> as a time variable.</li>
+<li>Generate a variable that records the directionality of each event.</li>
+</ul>
+</div>
+<div id="reading-icews-raw-data" class="section level2">
+<h2><span class="header-section-number">1.2</span> Reading ICEWS Raw Data</h2>
+<div id="icews-parser-function" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> ICEWS Parser Function</h3>
+</div>
+<div id="data-for-replication" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Data for Replication</h3>
+<p>Due to the large size and amount of time required to read, process, and merge the original <code>.tab</code> files, I export the results from the previous code chunk into a <code>.csv</code> file and read it directly, as shown below.</p>
+</div>
+</div>
+<div id="distribution-of-data-over-year" class="section level2">
+<h2><span class="header-section-number">1.3</span> Distribution of Data over Year</h2>
+<p>There are some issue with the <code>R</code> parser that leads to strange event counts compared to STATA.</p>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="using-stata" class="section level2">
+<h2><span class="header-section-number">1.4</span> Using STATA</h2>
+<p>By contrast, <code>STATA</code>’s parser has no issue with 2007, as shown in the graph. The remaining analysis will be conducted on the <code>ICEWS</code> data read in <code>STATA</code>.</p>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   eventid = col_integer(),
+##   eventdate = col_date(format = &quot;&quot;),
+##   cameocode = col_integer(),
+##   intensity = col_double(),
+##   storyid = col_integer(),
+##   sentencenumber = col_integer(),
+##   latitude = col_double(),
+##   longitude = col_double(),
+##   J2K = col_integer(),
+##   K2J = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="distribution-of-event-categories" class="section level2">
+<h2><span class="header-section-number">1.5</span> Distribution of Event Categories</h2>
+<p>One can see the distrubtion of event categories:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">category</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">6007</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">38992</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">353</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="right">4421</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="right">1031</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="right">19</td>
+</tr>
+</tbody>
+</table>
+<p>While in <code>events</code> each row is an event, I want each row to be a particular date with information of the frequency of an event of a particular type on that date.</p>
+</div>
+<div id="daily-data" class="section level2">
+<h2><span class="header-section-number">1.6</span> Daily Data</h2>
+<p>Now I reshape the data frame to make each event category its own coloumn for Time Series analysis.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">time</th>
+<th align="right">neutral</th>
+<th align="right">ver_coop</th>
+<th align="right">mat_coop</th>
+<th align="right">ver_conf</th>
+<th align="right">mat_conf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1996-01-03</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-04</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-05</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-06</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-07</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-08</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div id="summary-statistics" class="section level3">
+<h3><span class="header-section-number">1.6.1</span> Summary Statistics</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-7">Table 1.1: </span>Summary Statistics</caption>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Min.</th>
+<th align="left">1st Qu.</th>
+<th align="left">Median</th>
+<th align="left">Mean</th>
+<th align="left">3rd Qu.</th>
+<th align="left">Max.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">time</td>
+<td align="left">1996-01-03</td>
+<td align="left">2000-12-09</td>
+<td align="left">2005-11-16</td>
+<td align="left">2005-11-16</td>
+<td align="left">2010-10-23</td>
+<td align="left">2015-09-30</td>
+</tr>
+<tr class="even">
+<td align="left">neutral</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.833</td>
+<td align="left">1.000</td>
+<td align="left">29.000</td>
+</tr>
+<tr class="odd">
+<td align="left">ver_coop</td>
+<td align="left">0.00</td>
+<td align="left">0.00</td>
+<td align="left">2.00</td>
+<td align="left">5.41</td>
+<td align="left">6.00</td>
+<td align="left">259.00</td>
+</tr>
+<tr class="even">
+<td align="left">mat_coop</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.049</td>
+<td align="left">0.000</td>
+<td align="left">9.000</td>
+</tr>
+<tr class="odd">
+<td align="left">ver_conf</td>
+<td align="left">0.00</td>
+<td align="left">0.00</td>
+<td align="left">0.00</td>
+<td align="left">0.61</td>
+<td align="left">0.00</td>
+<td align="left">59.00</td>
+</tr>
+<tr class="even">
+<td align="left">mat_conf</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.143</td>
+<td align="left">0.000</td>
+<td align="left">28.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="time-series-across-categories-daily" class="section level3">
+<h3><span class="header-section-number">1.6.2</span> Time Series Across Categories (Daily)</h3>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="the-first-difference-of-time-series-across-categories-daily" class="section level3">
+<h3><span class="header-section-number">1.6.3</span> The “First Difference” of Time Series Across Categories (Daily)</h3>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+</div>
+<div id="weekly-data" class="section level2">
+<h2><span class="header-section-number">1.7</span> Weekly Data</h2>
+<div id="data-structure" class="section level3">
+<h3><span class="header-section-number">1.7.1</span> Data Structure</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">time_week</th>
+<th align="right">Neutral Event</th>
+<th align="right">Verbal Cooperation</th>
+<th align="right">Material Cooperation</th>
+<th align="right">Verbal Conflict</th>
+<th align="right">Material Conflict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1995-12-31</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-07</td>
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-14</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-21</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-28</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-02-04</td>
+<td align="right">4</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="time-series-across-categories-weekly" class="section level3">
+<h3><span class="header-section-number">1.7.2</span> Time Series Across Categories (Weekly)</h3>
+<p><img src="ritualized_main_files/figure-html/Weekly%20Time%20Series%20Plot-1.png" width="672" /></p>
+</div>
+<div id="summary-statistics-1" class="section level3">
+<h3><span class="header-section-number">1.7.3</span> Summary Statistics</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Min.</th>
+<th align="left">1st Qu.</th>
+<th align="left">Median</th>
+<th align="left">Mean</th>
+<th align="left">3rd Qu.</th>
+<th align="left">Max.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">time_week</td>
+<td align="left">1995-12-31</td>
+<td align="left">2000-12-06</td>
+<td align="left">2005-11-13</td>
+<td align="left">2005-11-13</td>
+<td align="left">2010-10-20</td>
+<td align="left">2015-09-27</td>
+</tr>
+<tr class="even">
+<td align="left">Neutral Event</td>
+<td align="left">0.00</td>
+<td align="left">1.00</td>
+<td align="left">3.00</td>
+<td align="left">5.83</td>
+<td align="left">8.00</td>
+<td align="left">72.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Verbal Cooperation</td>
+<td align="left">0.0</td>
+<td align="left">9.0</td>
+<td align="left">21.0</td>
+<td align="left">37.8</td>
+<td align="left">47.0</td>
+<td align="left">539.0</td>
+</tr>
+<tr class="even">
+<td align="left">Material Cooperation</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.000</td>
+<td align="left">0.342</td>
+<td align="left">0.000</td>
+<td align="left">20.000</td>
+</tr>
+<tr class="odd">
+<td align="left">Verbal Conflict</td>
+<td align="left">0.00</td>
+<td align="left">0.00</td>
+<td align="left">1.00</td>
+<td align="left">4.29</td>
+<td align="left">4.00</td>
+<td align="left">96.00</td>
+</tr>
+<tr class="even">
+<td align="left">Material Conflict</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">49</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="time-series-modeling.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

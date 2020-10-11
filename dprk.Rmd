@@ -1,0 +1,60 @@
+---
+title: "DPRK R Replication"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+dprk <- read_csv("dprk_rep.csv")
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+```{r, fig.width=7, fig.height=2.5}
+par(mfrow=c(1,3))
+ccf(dprk$jpn, dprk$test_total, ylab="cross-correlation", xlab="lag of DPRK test",
+    na.action=na.pass, main="Japan-Nuclear Test")
+ccf(dprk$kor, dprk$test_total, ylab="cross-correlation", xlab="lag of DPRK test",
+    na.action=na.pass, main="Korea-Nuclear Test")
+ccf(dprk$twn, dprk$test_total, ylab="cross-correlation", xlab="lag of DPRK test",
+    na.action=na.pass, main="Taiwan-Nuclear Test")
+```
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+```{r, fig.width=7, fig.height=7}
+par(mfrow=c(3,2))
+acf(dprk$jpn, na.action=na.pass)
+pacf(dprk$jpn, na.action=na.pass)
+acf(dprk$kor, na.action=na.pass)
+pacf(dprk$kor, na.action=na.pass)
+acf(dprk$twn, na.action=na.pass)
+pacf(dprk$twn, na.action=na.pass)
+```
+
+```{r}
+ur.df(dprk$jpn[1:203], type="trend",lags=30, selectlags = "AIC") %>% summary()
+```
+```{r}
+ur.df(dprk$kor, type="trend",lags=30, selectlags = "AIC") %>% summary()
+```
+```{r}
+ur.df(dprk$twn, type="trend",lags=30, selectlags = "AIC") %>% summary()
+```
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+

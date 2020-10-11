@@ -1,0 +1,185 @@
+---
+title: "Ritualized Text"
+output: html_notebook
+---
+
+#Cosine Similarity 
+
+## Reading News Articles
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE}
+library(tidyverse)
+library(lubridate)
+texts <- read_delim("_python/takeshima_articles.csv", delim="@")
+full_texts <- texts  %>% dplyr::select(-X1, -content, -newsid, date, title, wakati) %>% 
+  mutate(ID = 1:306)
+
+full_texts %>% head() %>% knitr::kable()
+```
+
+## Reading Cosine Similarity
+
+```{r, echo=TRUE}
+cosine <- read_csv("_python/takeshima_cosine.csv", col_names= as.character(1:306))
+cosineT <- read_csv("_python/takeshima_cosine_title.csv", col_names= as.character(1:306))
+
+```
+
+```{r}
+texts <- texts %>% select(date, title) %>% 
+  mutate(date = as_date(date))
+
+cosine_sim <- vector("double", 306)
+cosineT_sim <- vector("double", 306)
+for (i in 1:306){
+  cumulated = 0
+  for (j in 1:i){cumulated = c(cumulated, as.numeric(cosine[i,j]))}
+  cosine_sim[i] = max( cumulated[cumulated!=max(cumulated)] )
+}
+for (i in 1:306){
+  cumulated = 0
+  for (j in 1:i){cumulated = c(cumulated, as.numeric(cosineT[i,j]))}
+  cosineT_sim[i] = max( cumulated[cumulated!=max(cumulated)] )
+}
+
+
+# leave this to the very end
+#texts <- tibble(
+#  date = seq(as_date("2004-01-31"), as_date("2016-10-16"), by="days")
+#) %>% left_join(texts, by="date")
+
+
+
+```
+
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+```{r, echo=TRUE}
+plot(cosine_sim)
+```
+```{r}
+plot(scale(cosine_sim))
+```
+
+# DataFrame
+```{r}
+texts <- cbind(texts,cosine_sim, cosineT_sim)
+```
+
+# Full Data
+```{r}
+take_full <- read_delim("_python/takeshima_full_articles.csv", delim="@")
+take_full <- take_full %>% 
+  dplyr::select(-X1, -content, -newsid, date, title, wakati) %>% 
+  mutate(ID = 1:2259)
+
+```
+
+```{r, echo=FALSE}
+cosine_full <- read_csv("_python/takeshima_full_cosine.csv", col_names= as.character(1:2259))
+cosineT_full <- read_csv("_python/takeshima_full_cosine_title.csv", col_names= as.character(1:2259))
+
+```
+
+```{r}
+
+take_full <- take_full %>% select(date, title) %>% 
+  mutate(date = as_date(date))
+
+cosine_full_sim <- vector("double", 2259)
+cosineT_full_sim <- vector("double", 2259)
+for (i in 1:2259){
+  cumulated = 0
+  for (j in 1:i){cumulated = c(cumulated, as.numeric(cosine_full[i,j]))}
+  cosine_full_sim[i] = max( cumulated[cumulated!=max(cumulated)] )
+}
+for (i in 1:2259){
+  cumulated = 0
+  for (j in 1:i){cumulated = c(cumulated, as.numeric(cosineT_full[i,j]))}
+  cosineT_full_sim[i] = max(cumulated[cumulated!=max(cumulated)] )
+}
+
+
+
+```
+
+```{r}
+plot(cosineT_full_sim)
+```
+
+
+```{r, echo=TRUE}
+library(forecast)
+auto.arima(cosineT_full_sim)
+
+```
+
+## Empirical Strategy
+$$
+
+\text{(Material Conflict)}_t = \beta \text{(Ritualization)}*\text{(Verbal Conflict)} + \epsilon_t
+
+$$
+Dueh
+```{r, echo=TRUE, warning=FALSE}
+sim_sum <- cbind(take_full,a = cosine_full_sim, b= cosineT_full_sim)  %>%
+  group_by(date) %>% summarize(cosine_full_sim= max(a), cosineT_full_sim=max(b))
+
+Date <- tibble(date = seq(as_date("1997-01-22"),as_date("2016-10-16"),by="days"))
+sim_sum <- left_join(Date, sim_sum, by = "date") %>% replace_na(list(cosine_full_sim=0, cosineT_full_sim=0))
+```
+
+Further categorization
+
+```{r}
+high = (mean(cosineT_full_sim) + sd(cosineT_full_sim))
+mid = (mean(cosineT_full_sim) - sd(cosineT_full_sim))
+
+sim_sum <- sim_sum %>% mutate(
+  Ritualization = ifelse(cosineT_full_sim >= high, "High Ritualization", 
+  ifelse(cosineT_full_sim >= mid, "Medium Ritualization", 
+  ifelse(cosineT_full_sim > 0 , "Low Ritualization", "Non-Event"))), 
+  HighR = ifelse(Ritualization == "High Ritualization", 1, 0), 
+  LowR = ifelse(Ritualization == "Low Ritualization", 1, 0))
+
+ggplot(sim_sum %>% filter(date > as_date("2001-01-01")), aes(y=cosine_full_sim, x=date)) + 
+  geom_point(aes(color=cosine_full_sim), alpha=0.6, size=1) 
+
+ggplot(sim_sum %>% filter(date > as_date("2001-01-01")), aes(y=cosineT_full_sim, x=date)) + 
+  geom_point(aes(color=Ritualization), alpha=0.6, size=1) 
+
+```
+
+
+
+```{r}
+dic_path <- "/Users/Carl/Dropbox/_data/_dict/mecab-ipadic-neologd-master/build/mecab-ipadic-2.7.0-20070801-neologd-20170420/mecab-user-dict-seed.20170420.csv.dic"
+string = "日本韓国領土権主張する竹島めぐる島根県議会十五日竹島の日制定国求める竹島領土権確立意見書可決する近く小泉首相ら提出する北方領土同様竹島問題所管組織設置世論喚起目的竹島の日制定する学校教育竹島問題 取り入れる国際司法裁判所提訴三点国求めるいる	"
+RMeCabC(string, dic=dic_path) %>% unlist()
+```
+
+
+```{r}
+full_articles <- read_delim("_python/takeshima_full_articles.csv", delim="@")
+```
+```{r}
+require(RMeCab)
+require(stringr)
+
+words <- ""
+# seq_along(full_articles$content)
+for (i in 10){
+  words <- str_c(words, full_articles$content[i])
+}
+
+words
+```
+
+```{r}
+paste(for (i in 10){print(full_articles$content[i])})
+```
+
+
+
+

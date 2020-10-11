@@ -1,0 +1,1218 @@
+---
+title: "Ritualized Hostility"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+---
+
+# Data Structure
+
+```{r initial package, include=FALSE}
+library(tidyverse)
+library(forcats)
+library(lubridate)
+library(broom)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.align='center',
+  tidy = TRUE
+)
+```
+
+## CAMEO Coding Scheme
+To translate CAMEO coding scheme into four more general categories, I rely on the 
+mapping below for recoding.
+
+```{r cameo coding, echo=TRUE}
+# Coding Scheme
+neutral <- c("010","011","012","013","014","015","016","017","018","019","020",
+             "022","023","025","026","027", 
+             "211", "212", "213", "214", "231", "233","234", "241","242","243", 
+             "251", "252", "253", "256")
+ver_coop <- c("030", "031", "032", "033", "035", "036", "037", "038", "039", 
+              "040", "041", "042", "043", "044", "045", "046", "050", "051", 
+              "052", "053", "054", "055", "056", "057",
+              "311", "312", "313", "314", "331", "0331", "333", "341", "342", "353")
+mat_coop <- c("060", "061", "062","063", "064", "070", "071", "072", "073", 
+              "074", "075", "080", "081", 
+              "811", "831", "833", "841", "842", "861", "871", "872")
+ver_conf <- c("090", "100", "101", "102", "105", "106", "107", "111", "112", 
+              "113", "114", "115", "120", "124", "125", "127", "128", "130", 
+              "131", "133", "134", "138", "139", 
+              "1011", "1014", "1031", "1041", "1043", "1213", "1221", "1231", 
+              "1232", "1233", "1241", "1312", "1313", "1621")
+mat_conf <- c("141", "1412", "142", "143", "145", "150", "151", "153", "160",
+              "161", "162", "163", "164", "170", "172", "173", "174", "175", "180",
+              "181", "182", "183", "185", "186", "190", "191", "192", "193", "194", 
+              "202", 
+              "1711", "1721", "1821", "1822", "1823", "2042")
+```
+
+Because the entire volume of ICEWS is huge, I use the latest IECWS data (2017 January) `events.2016.20170206134701.tab` to test the steps of data manipulation before fully implementing
+all the methods.
+
+I did the following tasks:
+
+* Selecte only events which Japan or South Korea was the source or target.
+* Eliminate purely domestic events where Japan or South Korea were both the Source Country and the Target Country.
+* Recode the `CAMEO` Code into 4 categories with the mapping shown above.
+* Make`category` (0,1,2,3,4) a factor variable and `time` as a time variable.
+* Generate a variable that records the directionality of each event.
+
+```{r, include=FALSE}
+if (1==1){
+## Reading ICEWS Raw Data
+
+### ICEWS Parser Function
+
+
+icews_parser <- function(filename){
+  events <- read_tsv(filename) %>% 
+  filter(`Source Country` %in% c("Japan", "South Korea"), 
+         `Target Country` %in% c("Japan", "South Korea"),
+         `Source Country` != `Target Country`) %>% # some are domestic events
+  mutate(cameo = `CAMEO Code`,
+         category = ifelse(cameo %in% neutral, 0, 
+                    ifelse(cameo %in% ver_coop, 1, 
+                    ifelse(cameo %in% mat_coop, 2,
+                    ifelse(cameo %in% ver_conf, 3,
+                    ifelse(cameo %in% mat_conf, 4, 5))))),
+         direction = ifelse(`Source Country` == "Japan", "J2K", "K2J"),
+         freq = 1, time = `Event Date`) %>% dplyr::select(time, direction, category, freq)
+  events
+}
+
+events_2016 <- icews_parser("events.2016.20170206134701.tab")
+events_2015 <- icews_parser("events.2015.20170206133646.tab")
+events_2014 <- icews_parser("events.2014.20160121105408.tab")
+events_2013 <- icews_parser("events.2013.20150313084929.tab")
+events_2012 <- icews_parser("events.2012.20150313084811.tab")
+events_2011 <- icews_parser("events.2011.20150313084656.tab")
+events_2010 <- icews_parser("events.2010.20150313084533.tab")
+events_2009 <- icews_parser("events.2009.20150313084349.tab")
+events_2008 <- icews_parser("events.2008.20150313084156.tab")
+events_2007 <- icews_parser("events.2007.20150313083959.tab")
+events_2006 <- icews_parser("events.2006.20150313083752.tab")
+events_2005 <- icews_parser("events.2005.20150313083555.tab")
+events_2004 <- icews_parser("events.2004.20150313083407.tab")
+events <- rbind(events_2016, events_2015, events_2014, events_2013, events_2012,
+                events_2011, events_2010, events_2009, events_2008, events_2007,
+                events_2006, events_2005, events_2004)
+events %>% write_csv("icews_parsed.csv")
+
+### Data for Replication
+#Due to the large size and amount of time required to read, process, and merge the original 
+#`.tab` files, I export the results from the previous code chunk into a `.csv` file and 
+#read it directly, as shown below.
+
+events <-  read_csv("icews_parsed.csv") %>% 
+  mutate(
+    category = factor(category),
+    time = as_date(time)
+  )
+}
+```
+
+## Distribution of Data
+
+### Annual Distribution
+
+#### R Parser
+There are some issue with the `R` parser that leads to strange event counts compared to STATA.
+
+```{r, echo=FALSE, cache=TRUE}
+bardata <- events %>% 
+  mutate(year_time = as_date(floor_date(time, "year"))) %>% 
+  group_by(year_time) %>%
+  summarize(freq = sum(freq))
+
+  ggplot(bardata) + 
+      geom_bar(aes(x=year_time, y=freq), stat="identity") + 
+      scale_y_continuous(breaks=seq(0,6000, 500)) + 
+      scale_x_date(date_breaks="1 year", date_labels="%Y") + 
+      labs(x="Year", y="Event Counts")
+```
+
+#### STATA Parser
+
+
+By contrast, `STATA`'s parser has no issue with 2007, as shown in the graph. The remaining analysis will be conducted on the `ICEWS` data read in `STATA`.
+
+```{r, echo= FALSE, warning=FALSE, message=FALSE}
+# Coding Scheme
+neutral <- c("10","11","12","13","14","15","16","17","18","19","20",
+             "22","23","25","26","27", 
+             "211", "212", "213", "214", "231", "233","234", "241","242","243", 
+             "251", "252", "253", "256")
+ver_coop <- c("30", "31", "32", "33", "35", "36", "37", "38", "39", 
+              "40", "41", "42", "43", "44", "45", "46", "50", "51", 
+              "52", "53", "54", "55", "56", "57",
+              "311", "312", "313", "314", "331", "0331", "333", "341", "342", "353")
+mat_coop <- c("60", "61", "62","63", "64", "70", "71", "72", "73", 
+              "74", "75", "80", "81", 
+              "811", "831", "833", "841", "842", "861", "871", "872")
+ver_conf <- c("90", "100", "101", "102", "105", "106", "107", "111", "112", 
+              "113", "114", "115", "120", "124", "125", "127", "128", "130", 
+              "131", "133", "134", "138", "139", 
+              "1011", "1014", "1031", "1041", "1043", "1213", "1221", "1231", 
+              "1232", "1233", "1241", "1312", "1313", "1621")
+mat_conf <- c("141", "1412", "142", "143", "145", "150", "151", "153", "160",
+              "161", "162", "163", "164", "170", "172", "173", "174", "175", "180",
+              "181", "182", "183", "185", "186", "190", "191", "192", "193", "194", 
+              "202", 
+              "1711", "1721", "1821", "1822", "1823", "2042")
+stata <- read_csv("stata_icews.csv") %>% 
+          filter(`sourcecountry` %in% c("Japan", "South Korea"), 
+         `targetcountry` %in% c("Japan", "South Korea"),
+         `sourcecountry` != `targetcountry`) # some are domestic events
+
+stata <- stata %>% 
+  mutate(cameo = cameocode,
+         category = ifelse(cameo %in% neutral, 0, 
+                    ifelse(cameo %in% ver_coop, 1, 
+                    ifelse(cameo %in% mat_coop, 2,
+                    ifelse(cameo %in% ver_conf, 3,
+                    ifelse(cameo %in% mat_conf, 4, 5))))),
+         direction = ifelse(`sourcecountry` == "Japan", "J2K", "K2J"),
+         freq = 1) %>% 
+  dplyr::select(eventdate, direction, category, freq) %>% 
+  mutate(
+    category = factor(category),
+    time = as_datetime(eventdate)
+  )
+
+bardata2 <- stata %>% 
+  mutate(year_time = as_date(floor_date(time, "year"))) %>% 
+  group_by(year_time) %>%
+  summarize(freq = sum(freq))
+
+  fig1 <- ggplot(bardata2) + 
+      geom_bar(aes(x=year_time, y=freq), stat="identity") + 
+      scale_y_continuous(breaks=seq(0,6000, 500)) + 
+      scale_x_date(date_breaks="1 year", date_labels="%Y") + 
+      labs(x="Year", y="Event Counts") + coord_fixed(0.5)
+  fig1
+  ggsave(fig1, filename="fig1.pdf")
+
+```
+
+### Distribution of Event Type
+
+One can see the distrubtion of event categories:
+
+```{r}
+stata %>% count(category) %>% knitr::kable()
+```
+
+While in `events` each row is an event, I want each row to be a particular date with information of the frequency of an event of a particular type on that date.
+
+```{r, results="hide"}
+event_sum <- stata %>% 
+  group_by(time,category) %>% 
+  summarize(freq = sum(freq)) %>% 
+  complete(category, fill=list(freq=0))%>% ungroup(time)
+  # this does not work, need to merge first
+
+```
+
+## Daily & Weekly Comparison
+
+### Daily Time Series
+
+#### Data Structure
+
+Now I reshape the data frame to make each event category its own coloumn for Time Series analysis.
+
+```{r Daily Time Series Sample Structure, echo=FALSE}
+event_transposed <- event_sum %>% 
+  spread(key = "category", value = "freq") %>% 
+  mutate(time = as_date(time))
+names(event_transposed)[2:6] <- c("neutral", "ver_coop", "mat_coop", "ver_conf", "mat_conf")
+
+compelte_series<-tibble(time = seq(as_date("1996-01-03"),by="days",length.out=7211))
+compelte_series <- compelte_series %>% left_join(event_transposed[,-7], by="time") %>% 
+  replace_na(replace = list(neutral=0,ver_coop= 0,mat_coop=0,ver_conf= 0,mat_conf= 0))
+
+event_transposed <- compelte_series
+event_transposed %>% head() %>% knitr::kable()
+```
+
+#### Summary Statistics
+
+```{r}
+# options(digits = 4)
+# 
+# summary(event_transposed) %>% 
+#   broom::tidy() %>% 
+#   separate(Freq, c("Stats", "Value"), sep=":") %>% 
+#   spread(key="Stats", value="Value") %>% 
+#   dplyr::select(Variable = Var2, `Min.   `, `1st Qu.`, `Median `, `Mean   `, `3rd Qu.`, `Max.   `) %>% 
+#   knitr::kable(digits=2, caption="Summary Statistics")
+```
+
+#### Time Series Plot
+
+```{r}
+event_transposed %>% gather(neutral:mat_conf, key="event", value="freq") %>%
+  ggplot(aes(x=time, y=freq)) + geom_line(size=0.3) +
+  facet_wrap(~event, ncol=1, scale="free") + theme_grey(base_family = "Times")
+```
+
+# For Prospectus
+```{r}
+fig3 <- event_transposed %>% dplyr::select(time, `Verbal Conflicts` = ver_conf,
+                                   `Material Conflicts` = mat_conf) %>%
+  filter(time > as_date("2001-01-01")) %>%
+  gather(`Verbal Conflicts`,`Material Conflicts`, key="event", value="freq") %>%
+  ggplot(aes(x=time, y=freq)) + geom_line(size=0.3) +
+  facet_wrap(~event, ncol=1, scale="free") + theme_grey(base_family = "Times") +
+  labs(x= "Year", y = "Event Frequency")
+fig3
+
+ggsave("fig3.pdf", fig3)
+```
+
+### Weekly Time Series
+
+#### Data Structure
+
+```{r Weekly Time Series Summary Statistics}
+event_transposed_weekly <- 
+  event_transposed %>% 
+  mutate(time_week = floor_date(time, "week")) %>%
+  group_by(time_week) %>% # I take out direction so it becomes dyadic
+  summarize(
+    `Neutral Event`        = sum(neutral),
+    `Verbal Cooperation`   = sum(ver_coop),
+    `Material Cooperation` = sum(mat_coop),
+    `Verbal Conflict`      = sum(ver_conf),
+    `Material Conflict`    = sum(mat_conf)
+  )
+
+event_transposed_weekly %>% head() %>% knitr::kable()
+
+```
+
+#### Summary Statistics
+
+```{r}
+# summary(event_transposed_weekly) %>% 
+#   broom::tidy() %>% 
+#   separate(Freq, c("Stats", "Value"), sep=":") %>% 
+#   spread(key="Stats", value="Value") %>% 
+#   dplyr::select(Variable = Var2, `Min.   `, `1st Qu.`, `Median `, `Mean   `, `3rd Qu.`, `Max.   `) %>% 
+#   knitr::kable(digits=2)
+```
+
+#### Time Series Plot
+
+```{r Weekly Time Series Plot}
+event_transposed_weekly %>% 
+  gather(`Neutral Event`:`Material Conflict`, key="event", value="freq") %>% 
+  ggplot(aes(x=time_week, y=freq)) + geom_line(size=0.3) + 
+  facet_wrap(~event, ncol=1, scale="free") + 
+  scale_y_continuous() + labs(x="Time (in weeks)", y="Frequency of Event Occurence") + 
+  theme_bw(base_family = "Times")
+```
+
+
+# Modeling
+
+Note-to-self: should I consider changing each time-series vector using something like 
+`vector <- ts(vector,  frequency = frequency)`? Got this thought from http://stats.stackexchange.com/questions/266036/modeling-a-time-series-with-diminishing-seasonality. While this did not solve seasonality as expected, ...
+
+```{r, warning=FALSE, message=FALSE}
+library(tseries)
+library(tsDyn)
+library(urca)
+library(forecast) #for auto.arima()
+ 
+### Selecting Time Frame (2007 has issue) + Directionality (No-direction)
+ritualized_day <- event_transposed %>% 
+  group_by(time) %>%
+  summarize(
+    `Neutral Event` = sum(neutral),
+    `Verbal Cooperation` = sum(ver_coop),
+    `Material Cooperation` = sum(mat_coop),
+    `Verbal Conflict` = sum(ver_conf),
+    `Material Conflict` = sum(mat_conf)
+  ) %>%
+  filter(time > as_date("2001-01-01"))
+```
+
+## Unit Root Test
+
+```{r}
+df_vconf <- ur.df(ritualized_day$`Verbal Conflict`, type = "trend", lags = 30, selectlags="AIC") %>%
+  summary()
+tibble(`Test Statistics` = df_vconf@teststat[1]) %>% 
+  cbind(t(df_vconf@cval[1,] %>% rev()), `Integrated at 95% level` = "No") %>% knitr::kable(
+  caption='Unit Root Test of "Verbal Conflict" (max lags set to 30 with trend and drift term included)', 
+  digits = 2)
+
+
+df_vcoop <- ur.df(ritualized_day$`Verbal Cooperation`, type = "trend", lags = 30, selectlags="AIC") %>%
+  summary()
+tibble(`Test Statistics` = df_vcoop@teststat[1]) %>% 
+  cbind(t(df_vcoop@cval[1,] %>% rev()), `Integrated at 95% level` = "No") %>% knitr::kable(
+  caption='Unit Root Test of "Verbal Cooperation" (max lags set to 30 with trend and drift term included)', 
+  digits = 2)
+ 
+df_mconf <- ur.df(ritualized_day$`Material Conflict`, type = "trend", lags = 30, selectlags="AIC") %>%
+  summary()
+tibble(`Test Statistics` = df_mconf@teststat[1]) %>% 
+  cbind(t(df_mconf@cval[1,] %>% rev()), `Integrated at 95% level` = "No") %>% knitr::kable(
+  caption='Unit Root Test of "Material Conflict" (max lags set to 30 with trend and drift term included)', 
+  digits = 2)
+ 
+df_mcoop <- ur.df(ritualized_day$`Material Cooperation`, type = "trend", lags = 30, selectlags="AIC") %>%
+  summary()
+tibble(`Test Statistics` = df_mcoop@teststat[1]) %>% 
+  cbind(t(df_mcoop@cval[1,] %>% rev()), `Integrated at 95% level` = "No") %>% knitr::kable(
+  caption='Unit Root Test of "Material Cooperation" (max lags set to 30 with trend and drift term included)', 
+  digits = 2)
+```
+
+
+
+
+## ARIMA Specifications
+
+```{r, message=FALSE, warning=FALSE}
+library(gridExtra)
+```
+
+### Verbal Conflict
+
+Does it look like seasonality?
+```{r, fig.cap="ACF & PACF of Verbal Conflict"}
+vconf.acf <-  acf(ritualized_day$`Verbal Conflict`, plot=FALSE)
+vconf.pacf <- pacf(ritualized_day$`Verbal Conflict`,plot=FALSE)
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=13, hjust=0.5, family="Times"))
+
+vconf_acf_plot <-vconf.acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Verbal Conflict, ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting + coord_fixed(100)
+vconf_pacf_plot <- vconf.pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n(), type = "Verbal Conflict, PACF") %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", title= "Verbal Conflict, PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + 
+   coord_fixed(300)
+
+beta <- grid.arrange(vconf_acf_plot, vconf_pacf_plot, ncol=2)
+ggsave("ver_con_acf.pdf", beta)
+```
+
+
+
+One quick way to address this is to use a dummy variable for each day of the week,
+and then plot the ACF & PACF of this model's residuals. However, this does not 
+seem to resolve the issue.
+
+```{r, echo=TRUE}
+ritualized_day$wday <- wday(ritualized_day$time)
+season <- lm(ritualized_day$`Verbal Conflict` ~ factor(ritualized_day$wday))
+season_residual_acf <- acf(season$residuals, plot=FALSE)
+season_residual_pacf <- pacf(season$residuals, plot=FALSE)
+```
+
+
+```{r, fig.cap="ACF & PACF of Verbal Conflict's Weekday Residuals"}
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=11, hjust=0.5, family="Times"))
+
+season_residual_acf_plot <-season_residual_acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n(), type = "Verbal Conflict, ACF") %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Weekday Residuals of Verbal Conflict, ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+season_residual_pacf_plot <- season_residual_pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n(), type = "Verbal Conflict, PACF") %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", title= "Weekday Residuals of Verbal Conflict, PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(season_residual_acf_plot, season_residual_pacf_plot, ncol=2)
+
+
+```
+ 
+#### Residual ACF after ARIMA selection
+
+```{r}
+# auto.arima(ritualized_day$`Verbal Conflict`, ic="aic")
+vconf <- auto.arima(ritualized_day$`Verbal Conflict`, stationary = TRUE, ic="aic")
+vconf
+Box.test(vconf$residuals)
+```
+
+
+```{r, fig.cap="ACF & PACF of the Residuals of Verbal Conflict ARIMA(2,0,1)"}
+par(mfrow=c(1,2))
+vc_res_acf <- acf(vconf$residuals, plot=FALSE)
+vc_res_pacf <- pacf(vconf$residuals, plot=FALSE)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=11, hjust=0.5, family="Times"))
+
+vc_res_acf_plot <-vc_res_acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Verbal Conflict ARIMA (2,0,1), ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+vc_res_pacf_plot <- vc_res_pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", title= "Verbal Conflict (2,0,1), PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(vc_res_acf_plot, vc_res_pacf_plot, ncol=2)
+```
+
+### Verbal Cooperation
+
+```{r, fig.cap="ACF & PACF of Verbal Cooperation"}
+par(mfrow=c(1,2))
+vc.acf  <- acf(ritualized_day$`Verbal Cooperation`, lag.max=30, plot=FALSE)
+vc.pacf <- pacf(ritualized_day$`Verbal Cooperation`, lag.max=30, plot=FALSE)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=13, hjust=0.5, family="Times"))
+
+vc.acf_plot <-vc.acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Verbal Cooperation, ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+vc.pacf_plot <- vc.pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", title= "Verbal Cooperation, PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(vc.acf_plot, vc.pacf_plot, ncol=2)
+
+```
+ 
+#### Fitting ARMA
+```{r}
+(vcoop <- auto.arima(ritualized_day$`Verbal Cooperation`, test = "adf"))
+Box.test(vcoop$residuals)
+```
+
+
+```{r}
+vcoop.r.acf <- acf(vcoop$residuals, plot=FALSE)
+vcoop.r.pacf <- pacf(vcoop$residuals, plot=FALSE)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=13, hjust=0.5, family="Times"))
+
+vcoop.r.acf.plot <-vcoop.r.acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Verbal Cooperation ARIMA(1,0,2) Residuals ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+vcoop.r.pacf.plot <- vcoop.r.pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", 
+       title= "Verbal Cooperation ARIMA(1,0,2) Residuals PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(vcoop.r.acf.plot, vcoop.r.pacf.plot, ncol=2)
+
+```
+
+
+### Material Conflict
+
+```{r, fig.cap="ACF & PACF of Material Conflict"}
+mconf.acf <- acf(ritualized_day$`Material Conflict`, plot=FALSE)
+mconf.pacf <- pacf(ritualized_day$`Material Conflict`, plot=FALSE)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=13, hjust=0.5, family="Times"))
+
+mconf.acf.plot <-mconf.acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Material Conflict ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+mconf.pacf.plot <- mconf.pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", 
+       title= "Material Conflict PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+bobo <- grid.arrange(mconf.acf.plot, mconf.pacf.plot, ncol=2)
+ggsave("mat_conf_acf.pdf", bobo)
+
+
+
+
+```
+ 
+#### Fitting
+```{r}
+auto.arima(ritualized_day$`Material Conflict`) #ARIMA(1,0,1) with non-zero mean 
+(mconf <- auto.arima(ritualized_day$`Material Conflict`, stationary = TRUE))
+Box.test(mconf$residuals)
+ 
+mconf.acf.r <- acf(mconf$residuals, plot=FALSE)
+mconf.pacf.r <-pacf(mconf$residuals, plot=FALSE)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=13, hjust=0.5, family="Times"))
+
+mconf.acf.r.plot <-mconf.acf.r$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Material Conflict ARIMA(1,0,2) ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+mconf.pacf.r.plot <- mconf.pacf.r$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", 
+       title= "Material Conflict ARIMA(1,0,2) PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(mconf.acf.r.plot, mconf.pacf.r.plot, ncol=2)
+
+```
+
+### Material Cooperation
+
+```{r, fig.cap="ACF & PACF of Material Cooperation"}
+par(mfrow=c(1,2))
+m_coop.acf <-  acf(ritualized_day$`Material Cooperation`, plot = FALSE)
+m_coop.pacf <- pacf(ritualized_day$`Material Cooperation`, plot = FALSE)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=13, hjust=0.5, family="Times"))
+
+m_coop.acf.plot <-m_coop.acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Material Cooperation, ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+m_coop.pacf.plot <- m_coop.pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", 
+       title= "Material Cooperation, PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(m_coop.acf.plot, m_coop.pacf.plot, ncol=2)
+```
+ 
+#### Fitting
+```{r}
+mcoop <- auto.arima(ritualized_day$`Material Cooperation`, trace=TRUE,
+                    max.p = 5, max.q = 5, max.d = 1, test = "adf") #ARIMA(1,0,1) with non-zero mean 
+mcoop
+Box.test(mcoop$residuals) 
+```
+
+```{r}
+m_coop.r.acf <- acf(mcoop$residuals)
+m_coop.r.pacf <- pacf(mcoop$residuals)
+
+confidence <- 0.95
+interval <- c(1,-1)*qnorm((1+confidence)/2)/sqrt(vconf.acf$n.used)
+
+theme_setting <- theme(
+  panel.background = element_blank(),
+  panel.grid.major.y = element_line(color="grey90", size=0.5),
+  panel.grid.major.x = element_blank(),
+  panel.border = element_rect(fill=NA, color="grey20"),
+  axis.text = element_text(family="Times"),
+  axis.title = element_text(family="Times"),
+  plot.title = element_text(size=12, hjust=0.5, family="Times"))
+
+m_coop.r.acf.plot <-m_coop.r.acf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>% 
+  ggplot(aes(x=lags, y = value)) + scale_x_continuous(breaks=seq(0,41,4)) +
+  labs(y="Autocorrelations", x="Lag", title= "Material Cooperation ARIMA(1,0,1) ACF") +
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5) + theme_setting
+m_coop.r.pacf.plot <- m_coop.r.pacf$acf[-1] %>% 
+  as_tibble() %>% mutate(lags = 1:n()) %>%
+  ggplot(aes(x=lags, y = value)) + 
+  geom_segment(aes(xend=lags, yend=0)) +geom_point() + theme_setting + 
+   scale_x_continuous(breaks=seq(0,41,4))+ 
+  labs(y="Partial Autocorrelations", x="Lag", 
+       title= "Material Cooperation ARIMA(1,0,1) PACF") + 
+  geom_hline(yintercept = interval, linetype=2, size = 0.5, color="red", alpha=0.5)
+
+grid.arrange(m_coop.r.acf.plot, m_coop.r.pacf.plot, ncol=2)
+```
+
+
+# Vector Autoregression (VAR)
+
+## Model Presentation
+
+* Model 1: `Verbal Conflict` and `Verbal Cooperation`
+* Model 2: `Verbal Conflict` and `Material Conflict`
+* Model 3: `Verbal Conflict`, `Verbal Cooperation`, `Verbal Conflict` and `Material Conflict`
+
+```{r VarSelect, warning=FALSE, message=FALSE}
+library(vars)
+library(pander)
+library(stringr)
+```
+
+## Granger Causality Test
+
+### Granger: Model 1
+
+* Model 1: `Verbal Conflict` and `Verbal Cooperation`
+
+```{r Granger Model 1}
+options(scipen=999)
+VARselect(ritualized_day %>% dplyr::select(`Verbal Conflict`, `Verbal Cooperation`), 
+                    lag.max = 20, type="both")$select
+
+model1 <- VAR(ritualized_day %>% dplyr::select(`Verbal Conflict`, `Verbal Cooperation`), p=15, type="both")
+hypo <- causality(model1, cause= "Verbal.Conflict")$Granger$method
+pval <- causality(model1, cause= "Verbal.Conflict")$Granger$p.value
+tibble("Hypothesis" = str_replace_all(hypo, "[.]", " "),
+        "p-value"    = as.numeric(pval)) %>% pander(split.cells = 50, split.table = Inf,justify = 'left') 
+
+hypo <- causality(model1, cause="Verbal.Cooperation")$Granger$method
+pval <- causality(model1, cause="Verbal.Cooperation")$Granger$p.value
+tibble("Hypothesis" = str_replace_all(hypo, "[.]", " "),
+        "p-value"    = as.numeric(pval)) %>% pander(split.cells = 50, split.table = Inf,justify = 'left') 
+```
+
+### Granger: Model 2
+
+* Model 2: `Verbal Conflict` and `Material Conflict`
+
+```{r Granger Model 2}
+VARselect(ritualized_day %>% dplyr::select(`Verbal Conflict`,`Material Conflict`), 
+                    lag.max = 20, type="both")$select
+model2 <- VAR(ritualized_day %>% dplyr::select(`Verbal Conflict`, `Material Conflict`), p=17, type="both")
+hypo <- causality(model2, cause="Verbal.Conflict")$Granger$method
+pval <- causality(model2, cause="Verbal.Conflict")$Granger$p.value
+tibble("Hypothesis" = str_replace_all(hypo, "[.]", " "),
+        "p-value"    = as.numeric(pval)) %>% pander(split.cells = 50, split.table = Inf,justify = 'left') 
+
+hypo <- causality(model2, cause="Material.Conflict")$Granger$method
+pval <- causality(model2, cause="Material.Conflict")$Granger$p.value
+tibble("Hypothesis" = str_replace_all(hypo, "[.]", " "),
+        "p-value"    = as.numeric(pval)) %>% pander(split.cells = 50, split.table = Inf,justify = 'left') 
+
+```
+
+### Granger: Model 3
+
+* Model 3: `Verbal Conflict`, `Verbal Cooperation`, `Verbal Conflict` and `Material Conflict`
+
+```{r Granger Model 3}
+VARselect(ritualized_day %>% dplyr::select(`Verbal Conflict`, `Verbal Cooperation`, 
+                                           `Material Conflict`, `Material Cooperation`), 
+                    lag.max = 20, type="both")$select
+model3 <- VAR(ritualized_day %>% dplyr::select(`Verbal Conflict`, `Verbal Cooperation`, 
+              `Material Conflict`, `Material Cooperation`), 
+              p=7, type="both") 
+causality(model3, cause="Verbal.Conflict")$Granger
+```
+
+## IRF Model 1
+
+```{r IRF Model 1, cache=TRUE}
+irf_model1 <- irf(model1, impulse = "Verbal.Conflict", response = "Verbal.Cooperation", 
+                  boot=TRUE, runs=100, n.ahead=20)
+irf_model1.5 <- irf(model1, impulse = "Verbal.Cooperation", response =  "Verbal.Conflict", 
+                  boot=TRUE, runs=100, n.ahead=20)
+
+par(mfrow=c(1,2))
+plot(irf_model1)
+plot(irf_model1.5)
+```
+
+## IRF Model 2
+
+```{r IRF Model 2, cache=TRUE}
+irf_model2 <- irf(model2, impulse = "Verbal.Conflict", response ="Material.Conflict", 
+                  boot=TRUE, runs=100, n.ahead=20)
+irf_model2.5 <- irf(model2, impulse = "Material.Conflict", response = "Verbal.Conflict", 
+                  boot=TRUE, runs=100, n.ahead=20)
+par(mfrow=c(1,2))
+plot(irf_model2)
+plot(irf_model2.5)
+```
+
+## IRF Model 3
+
+```{r IRF Model 3, cache=TRUE}
+irf_model3 <- irf(model3, impulse = "Verbal.Conflict", 
+                    response = c("Verbal.Conflict", "Verbal.Cooperation", 
+                                 "Material.Conflict", "Material.Cooperation"), 
+                  boot=TRUE, runs=100, n.ahead=20)
+
+plot(irf_model3)
+```
+
+# ARIMAX 
+
+## Bilateral Events as "Schocks"
+
+```{r, cache=TRUE}
+pd = 90
+
+takeshima_day <- ritualized_day %>%
+  mutate(
+  `Passage of T Day Ordinance (2005)` = 
+    ifelse(as_date(time) %in% seq(as_date("2005/02/21"), by="days", length.out=pd),1,0),
+  `1st Takeshima Day (2006)` = 
+    ifelse(as_date(time) %in% seq(as_date("2006/02/21"), by="days", length.out=pd),1,0),
+  `2nd Takeshima Day (2007)` = 
+    ifelse(as_date(time) %in% seq(as_date("2007/02/21"), by="days", length.out=pd),1,0),
+  `3nd Takeshima Day (2008)` = 
+    ifelse(as_date(time) %in% seq(as_date("2008/02/21"), by="days", length.out=pd),1,0),
+  `4th Takeshima Day (2009)` = 
+    ifelse(as_date(time) %in% seq(as_date("2009/02/21"), by="days", length.out=pd),1,0),
+  `5th Takeshima Day (2010)` = 
+    ifelse(as_date(time) %in% seq(as_date("2010/02/21"), by="days", length.out=pd),1,0),
+  `6th Takeshima Day (2011)` = 
+    ifelse(as_date(time) %in% seq(as_date("2011/02/21"), by="days", length.out=pd),1,0),
+  `7th Takeshima Day (2012)` = 
+    ifelse(as_date(time) %in% seq(as_date("2012/02/21"), by="days", length.out=pd),1,0),
+  `Lee Myung-bak's Dokdo Visit` = 
+  ifelse(as_date(time) %in% seq(as_date("2012/08/09"), by="days",length.out=pd),1,0),
+  `8th Takeshima Day (2013)` = 
+    ifelse(as_date(time) %in% seq(as_date("2013/02/21"), by="days", length.out=pd),1,0),
+  `9th Takeshima Day (2014)` = 
+    ifelse(as_date(time) %in% seq(as_date("2014/02/21"), by="days", length.out=pd),1,0),
+  `10th Takeshima Day (2015)` = 
+    ifelse(as_date(time) %in% seq(as_date("2015/02/21"), by="days", length.out=pd),1,0)) %>% 
+  dplyr::select(-c(1:7))
+
+```
+
+## ARIMAX
+
+
+```{r}
+library(stargazer)
+Verbal_conf <- arima(ritualized_day$`Verbal Conflict`, c(2,0,1), xreg = takeshima_day )
+summary(Verbal_conf)
+```
+
+```{r key plot}
+ cbind(broom::tidy(Verbal_conf)[5:16,], order=12:1) %>%
+  ggplot(aes(x=estimate, y=fct_reorder(term, order))) + geom_point(color="darkseagreen4") + 
+  geom_vline(xintercept = 0, color="grey30", size = 0.1) + 
+  #geom_vline(xintercept = -2, color="grey80", size = 0.1) + 
+  #geom_vline(xintercept = 2, color="grey80", size = 0.1) + 
+  #geom_vline(xintercept = 4, color="grey80", size = 0.1) + 
+  geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.025)), 
+                     xmax=estimate+(std.error*qnorm(0.975))), 
+                     size = 0.4, height=0.2, color="darkseagreen4") + 
+  labs(x="Effect on Japan-South Korea Verbal Conflicts", 
+       y = "Pulse from Bilateral Events") +
+theme(
+    panel.background = element_blank(),
+    panel.border = element_rect(size=0.2, fill=NA, color="grey80"),
+    axis.title = element_text(size=9, color="grey40"),
+    title = element_text(size=10, color="grey30")
+  ) + coord_fixed(0.3) + theme_bw(base_family = "Times")
+ 
+ ggsave("ver_con_coef.pdf")
+```
+
+
+
+```{r}
+auto.arima(ritualized_day$`Material Conflict`)
+# material_conf <- auto.arima(ritualized_day$`Material Conflict`, xreg = takeshima_day)
+material_conf <- auto.arima(ritualized_day$`Material Conflict`, xreg = data.matrix(takeshima_day))
+
+cbind(broom::tidy(material_conf)[5:16,], order=12:1) %>%
+  ggplot(aes(x=estimate, y=fct_reorder(term, order))) + geom_point(color="darkseagreen4") + 
+  geom_vline(xintercept = 0) + 
+  geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.05)), 
+                     xmax=estimate+(std.error*qnorm(0.95))), 
+                 size = 0.2, height=0.2, color="darkseagreen4") + 
+  labs(x="Effect on Japan-South Korea Material Conflicts", y = "Pulse from Bilateral Events") +
+theme(
+    panel.background = element_blank(),
+    panel.border = element_rect(size=0.2, fill=NA, color="grey80")
+  ) + coord_fixed(0.08) + theme_bw(base_family = "Times")
+ 
+ ggsave("mat_con_coef.pdf")
+```
+
+```{r}
+# VC <- ts(ritualized_day$`Verbal Cooperation` , frequency = 7)
+# auto.arima(VC)
+# auto.arima(diff(VC))
+# #summary(ur.df(VC, lags=10, type="trend"))
+# VC.arimax <- arima(diff(VC), c(0,0,3), 
+#                    seasonal = list(order = c(0,0,1), period = NA),
+#                    xreg = diff_ivs)
+```
+
+```{r}
+ # cbind(broom::tidy(VC.arimax)[6:17,], order=12:1) %>%
+ #  ggplot(aes(x=estimate, y=fct_reorder(term, order))) + geom_point() + 
+ #  geom_vline(xintercept = 0) + 
+ #  geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.05)), 
+ #                     xmax=estimate+(std.error*qnorm(0.95))), size = 0.2, height=0.2, color="darkseagreen4") + 
+ #  labs(x="Effect on Japan-South Korea Verbal Cooperation", y = "Pulse from Bilateral Events")
+```
+
+## Directional ARIMAX
+
+### Korea to Japan
+```{r}
+korea_2_japan <- stata %>% filter(direction == "K2J") %>% 
+  group_by(time,category) %>% 
+  summarize(freq = sum(freq)) %>% 
+  complete(category, fill=list(freq=0))%>% ungroup(time) %>% 
+  spread(key = "category", value = "freq") %>% 
+  mutate(time = as_date(time)) 
+
+names(korea_2_japan)[2:6] <- c("neutral", "ver_coop", "mat_coop", "Verbal Conflict", "mat_conf")
+compelte_series<-tibble(time = seq(as_date("1996-01-03"),by="days",length.out=7211))
+compelte_series <- compelte_series %>% left_join(korea_2_japan[,-7], by="time") %>% 
+  replace_na(replace = list(neutral=0,ver_coop= 0,mat_coop=0,`Verbal Conflict`= 0,mat_conf= 0))
+korea_2_japan <- compelte_series
+data <- korea_2_japan %>% dplyr::select(time,`Verbal Conflict`) %>% 
+  mutate(time = as_date(time))
+
+
+pd = 90
+K2J <- tibble(time = seq(as_date("2001-01-01"), by="days", length.out = 5477)) %>% 
+  left_join(data, by = "time") %>% replace_na(replace=list(`Verbal Conflict`=0)) %>% 
+  mutate(`Verbal Conflict`= ts(`Verbal Conflict`),
+         `Passage of T Day Ordinance (2005)` = 
+    ifelse(as_date(time) %in% seq(as_date("2005/02/21"), by="days", length.out=pd),1,0),
+  `1st Takeshima Day (2006)` = 
+    ifelse(as_date(time) %in% seq(as_date("2006/02/21"), by="days", length.out=pd),1,0),
+  `2nd Takeshima Day (2007)` = 
+    ifelse(as_date(time) %in% seq(as_date("2007/02/21"), by="days", length.out=pd),1,0),
+  `3nd Takeshima Day (2008)` = 
+    ifelse(as_date(time) %in% seq(as_date("2008/02/21"), by="days", length.out=pd),1,0),
+  `4th Takeshima Day (2009)` = 
+    ifelse(as_date(time) %in% seq(as_date("2009/02/21"), by="days", length.out=pd),1,0),
+  `5th Takeshima Day (2010)` = 
+    ifelse(as_date(time) %in% seq(as_date("2010/02/21"), by="days", length.out=pd),1,0),
+  `6th Takeshima Day (2011)` = 
+    ifelse(as_date(time) %in% seq(as_date("2011/02/21"), by="days", length.out=pd),1,0),
+  `7th Takeshima Day (2012)` = 
+    ifelse(as_date(time) %in% seq(as_date("2012/02/21"), by="days", length.out=pd),1,0),
+  `Lee Myung-bak's Dokdo Visit` = 
+  ifelse(as_date(time) %in% seq(as_date("2012/08/09"), by="days",length.out=pd),1,0),
+  `8th Takeshima Day (2013)` = 
+    ifelse(as_date(time) %in% seq(as_date("2013/02/21"), by="days", length.out=pd),1,0),
+  `9th Takeshima Day (2014)` = 
+    ifelse(as_date(time) %in% seq(as_date("2014/02/21"), by="days", length.out=pd),1,0),
+  `10th Takeshima Day (2015)` = 
+    ifelse(as_date(time) %in% seq(as_date("2015/02/21"), by="days", length.out=pd),1,0),
+  time = ts(time, frequency=7))
+  
+auto.arima(K2J$`Verbal Conflict`)
+diff_vc <- diff(K2J$`Verbal Conflict`)
+auto.arima(diff_vc)
+
+new_diff = tibble(
+  `Passage of T Day Ordinance (2005)` = diff(K2J$`Passage of T Day Ordinance (2005)`),
+  `1st Takeshima Day (2006)` = diff(K2J$`1st Takeshima Day (2006)`),
+  `2nd Takeshima Day (2007)` = diff(K2J$`2nd Takeshima Day (2007)`),
+  `3nd Takeshima Day (2008)` = diff(K2J$`3nd Takeshima Day (2008)`),
+  `4th Takeshima Day (2009)` = diff(K2J$`4th Takeshima Day (2009)`),
+  `5th Takeshima Day (2010)` = diff(K2J$`5th Takeshima Day (2010)`),
+  `6th Takeshima Day (2011)` = diff(K2J$`6th Takeshima Day (2011)`),
+  `7th Takeshima Day (2012)` = diff(K2J$`7th Takeshima Day (2012)`),
+  `Lee Myung-bak's Dokdo Visit` = diff(K2J$`Lee Myung-bak's Dokdo Visit`),
+  `8th Takeshima Day (2013)` = diff(K2J$`8th Takeshima Day (2013)`),
+  `9th Takeshima Day (2014)` = diff(K2J$`9th Takeshima Day (2014)`),
+  `10th Takeshima Day (2015)` = diff(K2J$`10th Takeshima Day (2015)`)
+)
+
+model <- arima(diff_vc,order=c(1,0,1), xreg = new_diff)
+
+estimation <-  cbind(broom::tidy(model)[4:15,], order=12:1) 
+
+ggplot(data = estimation, aes(x=estimate, y=fct_reorder(term, order))) + geom_point(color="darkseagreen4") + 
+  geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.05)), 
+                     xmax=estimate+(std.error*qnorm(0.95))), 
+                     size = 0.4, height=0.2, color="darkseagreen4") + 
+  labs(x="Long-term Average of Verbal Conflicts From South Korea to Japan", 
+       y = "",
+       title= "ARIMAX Coefficient Plot, Japan-South Korea Bilateral Events",
+       subtitle="Data: Integrated Crisis Early Warning System (ICEWS) ")+
+theme(
+    panel.background = element_blank(),
+    panel.border = element_rect(size=0.2, fill=NA, color="grey80"),
+    axis.title = element_text(size=9, color="grey40"),
+    title = element_text(size=10, color="grey30") 
+  )+ geom_vline(xintercept = 0)
+
+```
+
+
+### Japan to Korea
+
+```{r}
+japan_2_korea <- stata %>% filter(direction == "J2K") %>% 
+  group_by(time,category) %>% 
+  summarize(freq = sum(freq)) %>% 
+  complete(category, fill=list(freq=0))%>% ungroup(time) %>% 
+  spread(key = "category", value = "freq") %>% 
+  mutate(time = as_date(time)) 
+
+names(japan_2_korea)[2:6] <- c("neutral", "ver_coop", "mat_coop", "Verbal Conflict", "mat_conf")
+compelte_series<-tibble(time = seq(as_date("1996-01-03"),by="days",length.out=7211))
+compelte_series <- compelte_series %>% left_join(japan_2_korea[,-7], by="time") %>% 
+  replace_na(replace = list(neutral=0,ver_coop= 0,mat_coop=0,`Verbal Conflict`= 0,mat_conf= 0))
+japan_2_korea <- compelte_series
+data <- japan_2_korea %>% dplyr::select(time,`Verbal Conflict`) %>% 
+  mutate(time = as_date(time))
+
+
+pd = 90
+J2K <- tibble(time = seq(as_date("2001-01-01"), by="days", length.out = 5477)) %>% 
+  left_join(data, by = "time") %>% replace_na(replace=list(`Verbal Conflict`=0)) %>% 
+  mutate(`Verbal Conflict`= ts(`Verbal Conflict`),
+         `Passage of T Day Ordinance (2005)` = 
+    ifelse(as_date(time) %in% seq(as_date("2005/02/21"), by="days", length.out=pd),1,0),
+  `1st Takeshima Day (2006)` = 
+    ifelse(as_date(time) %in% seq(as_date("2006/02/21"), by="days", length.out=pd),1,0),
+  `2nd Takeshima Day (2007)` = 
+    ifelse(as_date(time) %in% seq(as_date("2007/02/21"), by="days", length.out=pd),1,0),
+  `3nd Takeshima Day (2008)` = 
+    ifelse(as_date(time) %in% seq(as_date("2008/02/21"), by="days", length.out=pd),1,0),
+  `4th Takeshima Day (2009)` = 
+    ifelse(as_date(time) %in% seq(as_date("2009/02/21"), by="days", length.out=pd),1,0),
+  `5th Takeshima Day (2010)` = 
+    ifelse(as_date(time) %in% seq(as_date("2010/02/21"), by="days", length.out=pd),1,0),
+  `6th Takeshima Day (2011)` = 
+    ifelse(as_date(time) %in% seq(as_date("2011/02/21"), by="days", length.out=pd),1,0),
+  `7th Takeshima Day (2012)` = 
+    ifelse(as_date(time) %in% seq(as_date("2012/02/21"), by="days", length.out=pd),1,0),
+  `Lee Myung-bak's Dokdo Visit` = 
+  ifelse(as_date(time) %in% seq(as_date("2012/08/09"), by="days",length.out=pd),1,0),
+  `8th Takeshima Day (2013)` = 
+    ifelse(as_date(time) %in% seq(as_date("2013/02/21"), by="days", length.out=pd),1,0),
+  `9th Takeshima Day (2014)` = 
+    ifelse(as_date(time) %in% seq(as_date("2014/02/21"), by="days", length.out=pd),1,0),
+  `10th Takeshima Day (2015)` = 
+    ifelse(as_date(time) %in% seq(as_date("2015/02/21"), by="days", length.out=pd),1,0),
+  time = ts(time, frequency=7))
+  
+auto.arima(J2K$`Verbal Conflict`)
+model <- arima(J2K$`Verbal Conflict`,order=c(3,0,3), xreg = J2K[,3:14])
+
+estimation <-  cbind(broom::tidy(model)[8:19,], order=12:1) 
+
+ggplot(data = estimation, aes(x=estimate, y=fct_reorder(term, order))) + geom_point(color="darkseagreen4") + 
+  geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.05)), 
+                     xmax=estimate+(std.error*qnorm(0.95))), 
+                     size = 0.4, height=0.2, color="darkseagreen4") + 
+  labs(x="Long-term Average of Verbal Conflicts From Japan to South Korea", 
+       y = "",
+       title= "ARIMAX Coefficient Plot, Japan-South Korea Bilateral Events",
+       subtitle="Data: Integrated Crisis Early Warning System (ICEWS) ")+
+theme(
+    panel.background = element_blank(),
+    panel.border = element_rect(size=0.2, fill=NA, color="grey80"),
+    axis.title = element_text(size=9, color="grey40"),
+    title = element_text(size=10, color="grey30") 
+  )+ geom_vline(xintercept = 0)
+
+```
+
+# ARIMAX and Control
+To be added.
+## President and Prime Minister
+```{r pm, eval=FALSE}
+# takeshima_p <- takeshima %>%
+#   mutate(
+#     time = seq(as_date("2001-01-02"), by="days", length.out = 5385),
+#   `South Korean President` = 
+#     ifelse(as_date(time) < as_date("2003/02/25"),"Kim Dae-jung",
+#     ifelse(as_date(time) < as_date("2008/02/25"),"Roh Moo-hyun",
+#     ifelse(as_date(time) < as_date("2013/02/25"),"Lee Myung-bak",
+#     "Park Geun-hye"))),
+#   `Japanese Prime Minister` = 
+#     ifelse(as_date(time) < as_date("2001/04/26"),"Yoshirō Mori",
+#     ifelse(as_date(time) < as_date("2006/09/26"),"Junichiro Koizumi",
+#     ifelse(as_date(time) < as_date("2007/09/26"),"Shinzō Abe 1",
+#     ifelse(as_date(time) < as_date("2008/09/24"),"Yasuo Fukuda",
+#     ifelse(as_date(time) < as_date("2009/09/16"),"Tarō Asō",
+#     ifelse(as_date(time) < as_date("2010/06/08"),"Yukio Hatoyama",
+#     ifelse(as_date(time) < as_date("2011/09/02"),"Naoto Kan",
+#     ifelse(as_date(time) < as_date("2012/12/26"),"Yoshihiko Noda",
+#     "Shinzō Abe 2"))))))))) %>% dplyr::select(-time)
+# 
+# somatrix <- cbind(takeshima,
+# model.matrix( ~ `South Korean President` - 1, data=takeshima_p[,c(15)]),
+# model.matrix( ~ `Japanese Prime Minister` - 1, data=takeshima_p[,c(16)])) %>% dplyr::select(-1,-2)
+# 
+# new_arima <- auto.arima(takeshima_p[,1], test="adf", , xreg=somatrix[,-c(15,20)])
+# table <- broom::tidy(new_arima)[-c(1:4),] %>% mutate(order=n():1, type=c(rep("Events", 12), 
+#                                                           rep("Baseline: Park Geun Hye", 3), 
+#                                                           rep("Baseline: Shinzo Abe (2nd)", 8)))
+# 
+# a = ggplot(table[1:12,], aes(y=fct_reorder(term, order), x=estimate)) + geom_point() + geom_vline(xintercept = 0) + 
+#   geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.025)), xmax=estimate+(std.error*qnorm(0.975))),
+#                  size = 0.2, height=0.5) + facet_wrap(~type) + labs(x="")
+#   
+# b = ggplot(table[13:15,], aes(y=fct_reorder(term, estimate+(std.error*qnorm(0.025))), x=estimate)) + 
+#   geom_point() + geom_vline(xintercept = 0) + 
+#   geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.025)), xmax=estimate+(std.error*qnorm(0.975))),
+#                  size = 0.2, height=0.5) + facet_wrap(~type)
+# 
+# c = ggplot(table[16:23,], aes(y=fct_reorder(term, estimate+(std.error*qnorm(0.025))), x=estimate)) + 
+#   geom_point() + geom_vline(xintercept = 0) + 
+#   geom_errorbarh(aes(xmin=estimate+(std.error*qnorm(0.025)), xmax=estimate+(std.error*qnorm(0.975))),
+#                  size = 0.2, height=0.5) + facet_wrap(~type)
+#   
+# library(gridExtra)
+# 
+# grid.arrange(a, b, c, ncol=1)
+
+```
+# Regression Discontinuity 
+```{r}
+library(rdrobust)
+```
+
+
+```{r}
+# Y = verbal conflict (weeks?)
+y <- ritualized_day$`Verbal Conflict`
+# X = days before and after 2005 Takeshima
+ordinance_vector <- as.double(as_date(ritualized_day$time) - as_date("2005/02/21"))
+x<-ordinance_vector
+
+length(x) == length(y) 
+  
+rdrobust(y,x)
+```
+```{r}
+rdplot(y,x)
+```
+
+
+```{r}
+library(rdd)
+rdd_results <- RDestimate(y~x)
+```
+
+```{r}
+summary(rdd_results)
+```
+```{r}
+plot(rdd_results)
+```
+
+
+
+

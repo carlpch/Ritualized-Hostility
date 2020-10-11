@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ritualized Hostility</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Ritualized Hostility">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Ritualized Hostility" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ritualized Hostility" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="vector-autoregression-var.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#packages"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#cameo-coding-scheme"><i class="fa fa-check"></i><b>1.2</b> CAMEO Coding Scheme</a></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#reading-icews-raw-data"><i class="fa fa-check"></i><b>1.3</b> Reading ICEWS Raw Data</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#icews-parser-function"><i class="fa fa-check"></i><b>1.3.1</b> ICEWS Parser Function</a></li>
+<li class="chapter" data-level="1.3.2" data-path="setup.html"><a href="setup.html#original-code-for-loading-data"><i class="fa fa-check"></i><b>1.3.2</b> Original code for loading data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="setup.html"><a href="setup.html#data-for-replication"><i class="fa fa-check"></i><b>1.3.3</b> Data for Replication</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="outlook.html"><a href="outlook.html"><i class="fa fa-check"></i><b>2</b> Outlook</a><ul>
+<li class="chapter" data-level="2.1" data-path="outlook.html"><a href="outlook.html#distribution-of-data-over-year"><i class="fa fa-check"></i><b>2.1</b> Distribution of Data over Year</a></li>
+<li class="chapter" data-level="2.2" data-path="outlook.html"><a href="outlook.html#using-stata"><i class="fa fa-check"></i><b>2.2</b> Using STATA</a></li>
+<li class="chapter" data-level="2.3" data-path="outlook.html"><a href="outlook.html#distribution-of-event-categories"><i class="fa fa-check"></i><b>2.3</b> Distribution of Event Categories</a></li>
+<li class="chapter" data-level="2.4" data-path="outlook.html"><a href="outlook.html#daily-data"><i class="fa fa-check"></i><b>2.4</b> Daily Data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="outlook.html"><a href="outlook.html#summary-statistics"><i class="fa fa-check"></i><b>2.4.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.4.2" data-path="outlook.html"><a href="outlook.html#time-series-across-categories-daily"><i class="fa fa-check"></i><b>2.4.2</b> Time Series Across Categories (Daily)</a></li>
+<li class="chapter" data-level="2.4.3" data-path="outlook.html"><a href="outlook.html#the-first-difference-of-time-series-across-categories-daily"><i class="fa fa-check"></i><b>2.4.3</b> The “First Difference” of Time Series Across Categories (Daily)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="outlook.html"><a href="outlook.html#weekly-data"><i class="fa fa-check"></i><b>2.5</b> Weekly Data</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="outlook.html"><a href="outlook.html#data-structure"><i class="fa fa-check"></i><b>2.5.1</b> Data Structure</a></li>
+<li class="chapter" data-level="2.5.2" data-path="outlook.html"><a href="outlook.html#time-series-across-categories-weekly"><i class="fa fa-check"></i><b>2.5.2</b> Time Series Across Categories (Weekly)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="outlook.html"><a href="outlook.html#summary-statistics-1"><i class="fa fa-check"></i><b>2.5.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="time-series-modeling.html"><a href="time-series-modeling.html"><i class="fa fa-check"></i><b>3</b> Time Series Modeling</a><ul>
+<li class="chapter" data-level="3.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#setup-1"><i class="fa fa-check"></i><b>3.1</b> Setup</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#packages-1"><i class="fa fa-check"></i><b>3.1.1</b> Packages</a></li>
+<li class="chapter" data-level="3.1.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#selecting-time-frame-2007-has-issue-directionality-no-direction"><i class="fa fa-check"></i><b>3.1.2</b> Selecting Time Frame (2007 has issue) + Directionality (No-direction)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#testing-stationarity-with-augmented-dickey-fuller-test"><i class="fa fa-check"></i><b>3.2</b> Testing Stationarity with Augmented Dickey-Fuller Test</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-stationery"><i class="fa fa-check"></i><b>3.2.1</b> Verbal Conflict (Stationery)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-stationery"><i class="fa fa-check"></i><b>3.2.2</b> Verbal Cooperation (Stationery)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-stationery"><i class="fa fa-check"></i><b>3.2.3</b> Material Conflict (Stationery)</a></li>
+<li class="chapter" data-level="3.2.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-stationery"><i class="fa fa-check"></i><b>3.2.4</b> Material Cooperation (Stationery)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#specifying-autoregression-moving-average-arma"><i class="fa fa-check"></i><b>3.3</b> Specifying AutoRegression &amp; Moving Average (ARMA)</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-arma-17"><i class="fa fa-check"></i><b>3.3.1</b> Verbal Conflict (ARMA 1,7?)</a></li>
+<li class="chapter" data-level="3.3.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-arma-1"><i class="fa fa-check"></i><b>3.3.2</b> Verbal Cooperation (ARMA 1)</a></li>
+<li class="chapter" data-level="3.3.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-arima-101"><i class="fa fa-check"></i><b>3.3.3</b> Material Conflict (ARIMA 1,0,1)</a></li>
+<li class="chapter" data-level="3.3.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-arima-101"><i class="fa fa-check"></i><b>3.3.4</b> Material Cooperation (ARIMA 1,0,1)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html"><i class="fa fa-check"></i><b>4</b> Vector Autoregression (VAR)</a><ul>
+<li class="chapter" data-level="4.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#model-presentation"><i class="fa fa-check"></i><b>4.1</b> Model Presentation</a></li>
+<li class="chapter" data-level="4.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#selecting-lags-for-var"><i class="fa fa-check"></i><b>4.2</b> Selecting Lags for VAR</a></li>
+<li class="chapter" data-level="4.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-causality-test"><i class="fa fa-check"></i><b>4.3</b> Granger Causality Test</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-1"><i class="fa fa-check"></i><b>4.3.1</b> Granger: Model 1</a></li>
+<li class="chapter" data-level="4.3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-2"><i class="fa fa-check"></i><b>4.3.2</b> Granger: Model 2</a></li>
+<li class="chapter" data-level="4.3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-3"><i class="fa fa-check"></i><b>4.3.3</b> Granger: Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-1"><i class="fa fa-check"></i><b>4.4</b> IRF Model 1</a></li>
+<li class="chapter" data-level="4.5" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-2"><i class="fa fa-check"></i><b>4.5</b> IRF Model 2</a></li>
+<li class="chapter" data-level="4.6" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-3"><i class="fa fa-check"></i><b>4.6</b> IRF Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="irf-arimax-and-the-takeshima-day-puzzle.html"><a href="irf-arimax-and-the-takeshima-day-puzzle.html"><i class="fa fa-check"></i><b>5</b> IRF, ARIMAX and the “Takeshima Day” puzzle</a><ul>
+<li class="chapter" data-level="5.1" data-path="irf-arimax-and-the-takeshima-day-puzzle.html"><a href="irf-arimax-and-the-takeshima-day-puzzle.html#irf"><i class="fa fa-check"></i><b>5.1</b> IRF</a></li>
+<li class="chapter" data-level="5.2" data-path="irf-arimax-and-the-takeshima-day-puzzle.html"><a href="irf-arimax-and-the-takeshima-day-puzzle.html#arimax"><i class="fa fa-check"></i><b>5.2</b> ARIMAX</a></li>
+<li class="chapter" data-level="5.3" data-path="irf-arimax-and-the-takeshima-day-puzzle.html"><a href="irf-arimax-and-the-takeshima-day-puzzle.html#directional-arimax"><i class="fa fa-check"></i><b>5.3</b> Directional ARIMAX</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ritualized Hostility</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="irf-arimax-and-the-takeshima-day-puzzle" class="section level1">
+<h1><span class="header-section-number">5</span> IRF, ARIMAX and the “Takeshima Day” puzzle</h1>
+<div id="irf" class="section level2">
+<h2><span class="header-section-number">5.1</span> IRF</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pd =<span class="st"> </span><span class="dv">90</span>
+
+takeshima &lt;-<span class="st"> </span>ritualized_day <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+  <span class="st">`</span><span class="dt">Passage of T Day Ordinance (2005)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2005/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">1st Takeshima Day (2006)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2006/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">2nd Takeshima Day (2007)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2007/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">3nd Takeshima Day (2008)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2008/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">4th Takeshima Day (2009)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2009/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">5th Takeshima Day (2010)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2010/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">6th Takeshima Day (2011)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2011/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">7th Takeshima Day (2012)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2012/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">Lee Myung-bak&#39;s Dokdo Visit</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">  </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2012/08/09&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>,<span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">8th Takeshima Day (2013)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2013/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">9th Takeshima Day (2014)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2014/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">10th Takeshima Day (2015)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2015/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span> =<span class="st"> </span><span class="kw">ts</span>(<span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>, <span class="dt">frequency=</span><span class="dv">7</span>), 
+  <span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span> =<span class="st"> </span><span class="kw">ts</span>(<span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span>, <span class="dt">frequency=</span><span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>,<span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span>, <span class="st">`</span><span class="dt">Passage of T Day Ordinance (2005)</span><span class="st">`</span><span class="op">:</span>
+<span class="st">                  `</span><span class="dt">10th Takeshima Day (2015)</span><span class="st">`</span>)
+
+<span class="co">#VARselect(takeshima$`Verbal Conflict`, lag.max = 100)</span>
+<span class="co"># 1</span>
+<span class="co">#irf(VAR(takeshima %&gt;% dplyr::select(`Verbal Conflict`, takeshima1), p=38), impulse = &quot;takeshima1&quot;, &quot;Verbal.Conflict&quot;) %&gt;% plot()</span>
+
+<span class="co">#irf(VAR(takeshima %&gt;% dplyr::select(`Verbal Conflict`, takeshima2), p=7), impulse = &quot;takeshima2&quot;, &quot;Verbal.Conflict&quot;) %&gt;% plot()</span>
+
+<span class="co"># 2</span></code></pre></div>
+</div>
+<div id="arimax" class="section level2">
+<h2><span class="header-section-number">5.2</span> ARIMAX</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">auto.arima</span>(takeshima<span class="op">$</span><span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>)</code></pre></div>
+<pre><code>## Series: takeshima$`Verbal Conflict` 
+## ARIMA(3,0,3) with non-zero mean 
+## 
+## Coefficients:
+##          ar1      ar2     ar3      ma1     ma2      ma3  intercept
+##       1.9385  -1.6632  0.6655  -1.6223  1.2279  -0.4147     1.0803
+## s.e.  0.0474   0.0892  0.0496   0.0537  0.0953   0.0489     0.1281
+## 
+## sigma^2 estimated as 6.251:  log likelihood=-9202.38
+## AIC=18420.75   AICc=18420.79   BIC=18470.99</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Verbal_conf &lt;-<span class="st"> </span><span class="kw">arima</span>(takeshima<span class="op">$</span><span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>, <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">3</span>), 
+                <span class="dt">xreg =</span> takeshima[,<span class="dv">3</span><span class="op">:</span><span class="dv">14</span>] )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">cbind</span>(broom<span class="op">::</span><span class="kw">tidy</span>(Verbal_conf)[<span class="dv">8</span><span class="op">:</span><span class="dv">19</span>,], <span class="dt">order=</span><span class="dv">12</span><span class="op">:</span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>estimate, <span class="dt">y=</span><span class="kw">fct_reorder</span>(term, order))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color=</span><span class="st">&quot;grey30&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="op">-</span><span class="dv">2</span>, <span class="dt">color=</span><span class="st">&quot;grey80&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">2</span>, <span class="dt">color=</span><span class="st">&quot;grey80&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">4</span>, <span class="dt">color=</span><span class="st">&quot;grey80&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.05</span>)), 
+                     <span class="dt">xmax=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.95</span>))), 
+                     <span class="dt">size =</span> <span class="fl">0.4</span>, <span class="dt">height=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Long-term Average of Verbal Conflicts Between Japan and South Korea&quot;</span>, 
+       <span class="dt">y =</span> <span class="st">&quot;&quot;</span>,
+       <span class="dt">title=</span> <span class="st">&quot;ARIMAX Coefficient Plot, Japan-South Korea Bilateral Events&quot;</span>,
+       <span class="dt">subtitle=</span><span class="st">&quot;Data: Integrated Crisis Early Warning System (ICEWS) &quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>,<span class="dv">5</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="kw">theme</span>(
+    <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(),
+    <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">fill=</span><span class="ot">NA</span>, <span class="dt">color=</span><span class="st">&quot;grey80&quot;</span>),
+    <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>, <span class="dt">color=</span><span class="st">&quot;grey40&quot;</span>),
+    <span class="dt">title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">10</span>, <span class="dt">color=</span><span class="st">&quot;grey30&quot;</span>)
+  )</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/key%20plot-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">auto.arima</span>(takeshima<span class="op">$</span><span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span>)</code></pre></div>
+<pre><code>## Series: takeshima$`Material Conflict` 
+## ARIMA(1,0,2)(0,0,1)[7] with non-zero mean 
+## 
+## Coefficients:
+##          ar1      ma1      ma2    sma1  intercept
+##       0.8112  -0.5968  -0.0503  0.0388     0.2385
+## s.e.  0.0392   0.0426   0.0220  0.0171     0.0299
+## 
+## sigma^2 estimated as 0.9363:  log likelihood=-5461.39
+## AIC=10934.79   AICc=10934.81   BIC=10972.46</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">material_conf &lt;-<span class="st"> </span><span class="kw">arima</span>(takeshima<span class="op">$</span><span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span>, <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">3</span>), 
+                <span class="dt">xreg =</span> takeshima[,<span class="dv">3</span><span class="op">:</span><span class="dv">14</span>])
+
+ <span class="kw">cbind</span>(broom<span class="op">::</span><span class="kw">tidy</span>(material_conf)[<span class="dv">8</span><span class="op">:</span><span class="dv">19</span>,], <span class="dt">order=</span><span class="dv">12</span><span class="op">:</span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>estimate, <span class="dt">y=</span><span class="kw">fct_reorder</span>(term, order))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.05</span>)), 
+                     <span class="dt">xmax=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.95</span>))), 
+                 <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">height=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Effect on Japan-South Korea Material Conflicts&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Pulse from Bilateral Events&quot;</span>) <span class="op">+</span>
+<span class="kw">theme</span>(
+    <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(),
+    <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">fill=</span><span class="ot">NA</span>, <span class="dt">color=</span><span class="st">&quot;grey80&quot;</span>)
+  )</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">VC &lt;-<span class="st"> </span><span class="kw">ts</span>(ritualized_day<span class="op">$</span><span class="st">`</span><span class="dt">Verbal Cooperation</span><span class="st">`</span> , <span class="dt">frequency =</span> <span class="dv">7</span>)
+<span class="co">#auto.arima(VC)</span>
+<span class="co">#auto.arima(diff(VC))</span>
+<span class="co">#summary(ur.df(VC, lags=10, type=&quot;trend&quot;))</span>
+VC.arimax &lt;-<span class="st"> </span><span class="kw">arima</span>(<span class="kw">diff</span>(VC), <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">4</span>), <span class="dt">xreg =</span> takeshima[<span class="op">-</span><span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">14</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="kw">cbind</span>(broom<span class="op">::</span><span class="kw">tidy</span>(VC.arimax)[<span class="dv">6</span><span class="op">:</span><span class="dv">17</span>,], <span class="dt">order=</span><span class="dv">12</span><span class="op">:</span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>estimate, <span class="dt">y=</span><span class="kw">fct_reorder</span>(term, order))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.05</span>)), 
+                     <span class="dt">xmax=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.95</span>))), <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">height=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Effect on Japan-South Korea Verbal Cooperation&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Pulse from Bilateral Events&quot;</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+<div id="directional-arimax" class="section level2">
+<h2><span class="header-section-number">5.3</span> Directional ARIMAX</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(time,<span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as_date</span>(time))
+pd =<span class="st"> </span><span class="dv">30</span>
+K2J &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">time =</span> <span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2001-01-01&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out =</span> <span class="dv">5477</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">left_join</span>(data, <span class="dt">by =</span> <span class="st">&quot;time&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">replace_na</span>(<span class="dt">replace=</span><span class="kw">list</span>(<span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>=<span class="dv">0</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>=<span class="st"> </span><span class="kw">ts</span>(<span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>),
+         <span class="st">`</span><span class="dt">Passage of T Day Ordinance (2005)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2005/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">1st Takeshima Day (2006)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2006/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">2nd Takeshima Day (2007)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2007/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">3nd Takeshima Day (2008)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2008/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">4th Takeshima Day (2009)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2009/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">5th Takeshima Day (2010)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2010/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">6th Takeshima Day (2011)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2011/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">7th Takeshima Day (2012)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2012/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">Lee Myung-bak&#39;s Dokdo Visit</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">  </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2012/08/09&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>,<span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">8th Takeshima Day (2013)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2013/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">9th Takeshima Day (2014)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2014/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>),
+  <span class="st">`</span><span class="dt">10th Takeshima Day (2015)</span><span class="st">`</span> =<span class="st"> </span>
+<span class="st">    </span><span class="kw">ifelse</span>(<span class="kw">as_date</span>(time) <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="kw">as_date</span>(<span class="st">&quot;2015/02/21&quot;</span>), <span class="dt">by=</span><span class="st">&quot;days&quot;</span>, <span class="dt">length.out=</span>pd),<span class="dv">1</span>,<span class="dv">0</span>))
+  
+<span class="kw">auto.arima</span>(K2J<span class="op">$</span><span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>)</code></pre></div>
+<pre><code>## Series: K2J$`Verbal Conflict` 
+## ARIMA(1,1,1)                    
+## 
+## Coefficients:
+##          ar1      ma1
+##       0.3116  -0.9501
+## s.e.  0.0159   0.0073
+## 
+## sigma^2 estimated as 4.727:  log likelihood=-12022.69
+## AIC=24051.37   AICc=24051.38   BIC=24071.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff_vc &lt;-<span class="st"> </span><span class="kw">diff</span>(K2J<span class="op">$</span><span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>)
+<span class="kw">auto.arima</span>(diff_vc)</code></pre></div>
+<pre><code>## Series: diff_vc 
+## ARIMA(1,0,1) with zero mean     
+## 
+## Coefficients:
+##          ar1      ma1
+##       0.3116  -0.9501
+## s.e.  0.0159   0.0073
+## 
+## sigma^2 estimated as 4.727:  log likelihood=-12022.69
+## AIC=24051.37   AICc=24051.38   BIC=24071.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">arima</span>(diff_vc,<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">xreg =</span> K2J[<span class="op">-</span><span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">14</span>]) 
+<span class="co">#model &lt;- arima(diff_vc,order=c(1,0,2),seasonal=list(order = c(0,0,2))) # for freq = 7</span>
+<span class="kw">plot</span>(model<span class="op">$</span>residuals)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">acf</span>(model<span class="op">$</span>residuals)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-36-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Box.test</span>(model<span class="op">$</span>residuals)</code></pre></div>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  model$residuals
+## X-squared = 0.16205, df = 1, p-value = 0.6873</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">arima</span>(diff_vc,<span class="dt">order=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>),<span class="dt">seasonal=</span><span class="kw">list</span>(<span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>)), 
+               <span class="dt">xreg =</span> K2J[<span class="op">-</span><span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">14</span>])
+
+estimation &lt;-<span class="st">  </span><span class="kw">cbind</span>(broom<span class="op">::</span><span class="kw">tidy</span>(model)[<span class="dv">7</span><span class="op">:</span><span class="dv">18</span>,], <span class="dt">order=</span><span class="dv">12</span><span class="op">:</span><span class="dv">1</span>) 
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> estimation, <span class="kw">aes</span>(<span class="dt">x=</span>estimate, <span class="dt">y=</span><span class="kw">fct_reorder</span>(term, order))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.05</span>)), 
+                     <span class="dt">xmax=</span>estimate<span class="op">+</span>(std.error<span class="op">*</span><span class="kw">qnorm</span>(<span class="fl">0.95</span>))), 
+                     <span class="dt">size =</span> <span class="fl">0.4</span>, <span class="dt">height=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;darkseagreen4&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Long-term Average of Verbal Conflicts Between Japan and South Korea&quot;</span>, 
+       <span class="dt">y =</span> <span class="st">&quot;&quot;</span>,
+       <span class="dt">title=</span> <span class="st">&quot;ARIMAX Coefficient Plot, Japan-South Korea Bilateral Events&quot;</span>,
+       <span class="dt">subtitle=</span><span class="st">&quot;Data: Integrated Crisis Early Warning System (ICEWS) &quot;</span>)<span class="op">+</span>
+<span class="kw">theme</span>(
+    <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(),
+    <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">fill=</span><span class="ot">NA</span>, <span class="dt">color=</span><span class="st">&quot;grey80&quot;</span>),
+    <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>, <span class="dt">color=</span><span class="st">&quot;grey40&quot;</span>),
+    <span class="dt">title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">10</span>, <span class="dt">color=</span><span class="st">&quot;grey30&quot;</span>) 
+  )<span class="op">+</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-36-3.png" width="672" /></p>
+<p>sfsd</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vector-autoregression-var.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

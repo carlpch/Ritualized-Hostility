@@ -1,0 +1,159 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{}
+cd /usr/local/lib/mecab/dic/mecab-ipadic-neologd
+```
+
+Then create a user dictionary in the path specified in the second half of the same command line below:
+```{}
+./bin/install-mecab-ipadic-neologd --create_user_dic ./build/mecab-ipadic-2.7.0-20070801-neologd-20170424/mecab-user-dict-seed.20170424.csv.dic 
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+```{r}
+#install.packages("RMeCab")
+require(RMeCab)
+require(tidyverse)
+require(forcats)
+```
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+```{r}
+dic_path <- "/Users/Carl/Dropbox/_data/_dict/mecab-ipadic-neologd-master/build/mecab-ipadic-2.7.0-20070801-neologd-20170420/mecab-user-dict-seed.20170420.csv.dic"
+string = "日本韓国領土権主張する竹島めぐる島根県議会十五日竹島の日制定国求める竹島領土権確立意見書可決する近く小泉首相ら提出する北方領土同様竹島問題所管組織設置世論喚起目的竹島の日制定する学校教育竹島問題 取り入れる国際司法裁判所提訴三点国求めるいる。"
+(mecab_result <- RMeCabC(string, dic=dic_path) %>% unlist())
+```
+
+Then distribution of words
+```{r}
+as_tibble(names(mecab_result)) %>% count(value) %>% 
+  ggplot(aes(x=value, y=n)) + geom_bar(stat="identity", width = 0.5, fill="grey") + coord_flip() + 
+  theme_bw(base_size = 10, base_family = "HiraKakuProN-W3")
+
+```
+
+```{r}
+require(forcats)
+as_tibble(mecab_result) %>% count(value) %>% filter(n>1) %>%
+  ggplot(aes(x=fct_reorder(value, n), y=n)) + geom_bar(stat="identity", width = 0.5, fill="grey") + coord_flip() + 
+  theme_bw(base_size = 10, base_family = "HiraKakuProN-W3") + 
+  labs(x="Phrase", y="Frequency")
+
+```
+
+```{r}
+full_articles <- read_delim("_python/takeshima_full_articles.csv", delim="@")
+unlist(RMeCabC(full_articles[1,]$content))
+```
+
+# Clean out a full-text data file
+```{r}
+all_text <<- "" # Global Variable (http://stackoverflow.com/questions/1236620/global-variables-in-r)
+for (i in seq_along(full_articles$content)){
+  all_text <- paste(all_text, full_articles$content[i])
+}
+```
+
+# Do stuff
+```{r}
+dic_path <- "/Users/Carl/Dropbox/_data/_dict/mecab-ipadic-neologd-master/build/mecab-ipadic-2.7.0-20070801-neologd-20170420/mecab-user-dict-seed.20170420.csv.dic"
+mecab_all <- RMeCabC(all_text, dic=dic_path) %>% unlist()
+
+```
+
+```{r, fig.width=9, fig.height=10}
+mecab_done <- tibble(word = mecab_all, pos = names(mecab_all)) %>% filter(pos %in% c("名詞", "動詞"))
+stopwords <- readLines("_stopwords/stop-170427.txt")
+
+mecab_done_new　<- mecab_done %>% filter(!(word %in% stopwords)) %>% count(word) %>% arrange(desc(n))
+
+mecab_done_new %>% filter(n>100) %>% 
+  ggplot(aes(x=fct_reorder(word, n), y=n)) + geom_bar(stat="identity", width = 0.5, fill="grey") + coord_flip() + 
+  theme_bw(base_size = 20, base_family = "HiraKakuProN-W3") + 
+  labs(x="Phrase", y="Frequency")
+
+```
+# Save File
+```{r}
+mecab_processor <- function(text){
+  dic_path = "/Users/Carl/Dropbox/_data/_dict/mecab-ipadic-neologd-master/build/mecab-ipadic-2.7.0-20070801-neologd-20170420/mecab-user-dict-seed.20170420.csv.dic"
+  stopwords <- readLines("_stopwords/stop-170427.txt")
+  output = vector("character", length(text))
+  for (t in seq_along(text)){
+  mecabbed1 <- RMeCabC(text[t], dic=dic_path) %>% unlist()
+  mecabbed2 <- tibble(word = mecabbed1, pos = names(mecabbed1)) %>% 
+    filter(pos %in% c("名詞", "動詞")) %>% 
+    filter(!(word %in% stopwords)) 
+  
+  full_words <- ""
+  for (i in seq_along(mecabbed2$word)){
+    full_words = paste(full_words, mecabbed2$word[i], sep=" ")
+  }
+  output[t]<-full_words
+  }
+  output
+}
+```
+
+#Test
+```{r}
+string = "日本韓国領土権主張する竹島めぐる島根県議会十五日竹島の日制定国求める竹島領土権確立意見書可決する近く小泉首相ら提出する北方領土同様竹島問題所管組織設置世論喚起目的竹島の日制定する学校教育竹島問題 取り入れる国際司法裁判所提訴三点国求めるいる。"
+mecab_processor(c(string,"甜bobo我的甜bobo"))
+```
+# Save CSV
+```{r}
+export_data <- full_articles %>% mutate(wakati = mecab_processor(content)) %>% select(-X1, -content)
+export_data <- export_data %>% distinct(wakati, .keep_all = TRUE)
+write_delim(export_data, "pre-processed.csv", delim = "@")
+```
+
+# Python & Sklearn?
+```{python, engine.path="/Users/Carl/anaconda/bin/python"}
+import pandas as pd
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
+
+# Read the saved CSV
+pre_processed = pd.read_csv("pre-processed.csv", sep="@")
+
+# Process Cosine Similarity
+count_vectorizer = CountVectorizer()
+cosine = count_vectorizer.fit_transform(pre_processed['wakati'])
+cosine_sim = cosine_similarity(cosine)
+
+# Feather the object into R
+np.savetxt("cosine.csv", cosine_sim, delimiter=",")
+```
+
+# Load
+```{r}
+cosine_sim <- read.csv("cosine.csv", header = FALSE) #Non-Tidy is better here
+cosine_sim　%>% unlist() %>% mean()
+cosine_sim　%>% unlist() %>% sd()
+cosine_sim　%>% unlist() %>% range()
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+

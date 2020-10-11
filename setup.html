@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ritualized Hostility</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Ritualized Hostility">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Ritualized Hostility" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ritualized Hostility" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="time-series-modeling.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#cameo-coding-scheme"><i class="fa fa-check"></i><b>1.1</b> CAMEO Coding Scheme</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#reading-icews-raw-data"><i class="fa fa-check"></i><b>1.2</b> Reading ICEWS Raw Data</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="setup.html"><a href="setup.html#icews-parser-function"><i class="fa fa-check"></i><b>1.2.1</b> ICEWS Parser Function</a></li>
+<li class="chapter" data-level="1.2.2" data-path="setup.html"><a href="setup.html#data-for-replication"><i class="fa fa-check"></i><b>1.2.2</b> Data for Replication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#distribution-of-data-over-year"><i class="fa fa-check"></i><b>1.3</b> Distribution of Data over Year</a></li>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#using-stata"><i class="fa fa-check"></i><b>1.4</b> Using STATA</a></li>
+<li class="chapter" data-level="1.5" data-path="setup.html"><a href="setup.html#distribution-of-event-categories"><i class="fa fa-check"></i><b>1.5</b> Distribution of Event Categories</a></li>
+<li class="chapter" data-level="1.6" data-path="setup.html"><a href="setup.html#daily-data"><i class="fa fa-check"></i><b>1.6</b> Daily Data</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="setup.html"><a href="setup.html#summary-statistics"><i class="fa fa-check"></i><b>1.6.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="1.6.2" data-path="setup.html"><a href="setup.html#time-series-across-categories-daily"><i class="fa fa-check"></i><b>1.6.2</b> Time Series Across Categories (Daily)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="setup.html"><a href="setup.html#the-first-difference-of-time-series-across-categories-daily"><i class="fa fa-check"></i><b>1.6.3</b> The “First Difference” of Time Series Across Categories (Daily)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="setup.html"><a href="setup.html#weekly-data"><i class="fa fa-check"></i><b>1.7</b> Weekly Data</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="setup.html"><a href="setup.html#data-structure"><i class="fa fa-check"></i><b>1.7.1</b> Data Structure</a></li>
+<li class="chapter" data-level="1.7.2" data-path="setup.html"><a href="setup.html#time-series-across-categories-weekly"><i class="fa fa-check"></i><b>1.7.2</b> Time Series Across Categories (Weekly)</a></li>
+<li class="chapter" data-level="1.7.3" data-path="setup.html"><a href="setup.html#summary-statistics-1"><i class="fa fa-check"></i><b>1.7.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="time-series-modeling.html"><a href="time-series-modeling.html"><i class="fa fa-check"></i><b>2</b> Time Series Modeling</a><ul>
+<li class="chapter" data-level="2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#setup-1"><i class="fa fa-check"></i><b>2.1</b> Setup</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#packages"><i class="fa fa-check"></i><b>2.1.1</b> Packages</a></li>
+<li class="chapter" data-level="2.1.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#selecting-time-frame-2007-has-issue-directionality-no-direction"><i class="fa fa-check"></i><b>2.1.2</b> Selecting Time Frame (2007 has issue) + Directionality (No-direction)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#testing-stationarity-with-augmented-dickey-fuller-test"><i class="fa fa-check"></i><b>2.2</b> Testing Stationarity with Augmented Dickey-Fuller Test</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-stationery"><i class="fa fa-check"></i><b>2.2.1</b> Verbal Conflict (Stationery)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-stationery"><i class="fa fa-check"></i><b>2.2.2</b> Verbal Cooperation (Stationery)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-stationery"><i class="fa fa-check"></i><b>2.2.3</b> Material Conflict (Stationery)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-stationery"><i class="fa fa-check"></i><b>2.2.4</b> Material Cooperation (Stationery)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#specifying-autoregression-moving-average-arma"><i class="fa fa-check"></i><b>2.3</b> Specifying AutoRegression &amp; Moving Average (ARMA)</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-arma-17"><i class="fa fa-check"></i><b>2.3.1</b> Verbal Conflict (ARMA 1,7?)</a></li>
+<li class="chapter" data-level="2.3.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-arma-1"><i class="fa fa-check"></i><b>2.3.2</b> Verbal Cooperation (ARMA 1)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-arima-101"><i class="fa fa-check"></i><b>2.3.3</b> Material Conflict (ARIMA 1,0,1)</a></li>
+<li class="chapter" data-level="2.3.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-arima-101"><i class="fa fa-check"></i><b>2.3.4</b> Material Cooperation (ARIMA 1,0,1)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html"><i class="fa fa-check"></i><b>3</b> Vector Autoregression (VAR)</a><ul>
+<li class="chapter" data-level="3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#model-presentation"><i class="fa fa-check"></i><b>3.1</b> Model Presentation</a></li>
+<li class="chapter" data-level="3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#selecting-lags-for-var"><i class="fa fa-check"></i><b>3.2</b> Selecting Lags for VAR</a></li>
+<li class="chapter" data-level="3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-causality-test"><i class="fa fa-check"></i><b>3.3</b> Granger Causality Test</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Granger: Model 1</a></li>
+<li class="chapter" data-level="3.3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-2"><i class="fa fa-check"></i><b>3.3.2</b> Granger: Model 2</a></li>
+<li class="chapter" data-level="3.3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-3"><i class="fa fa-check"></i><b>3.3.3</b> Granger: Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-1"><i class="fa fa-check"></i><b>3.4</b> IRF Model 1</a></li>
+<li class="chapter" data-level="3.5" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-2"><i class="fa fa-check"></i><b>3.5</b> IRF Model 2</a></li>
+<li class="chapter" data-level="3.6" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-3"><i class="fa fa-check"></i><b>3.6</b> IRF Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="arimax.html"><a href="arimax.html"><i class="fa fa-check"></i><b>4</b> ARIMAX</a><ul>
+<li class="chapter" data-level="4.1" data-path="arimax.html"><a href="arimax.html#bilateral-events-as-schocks"><i class="fa fa-check"></i><b>4.1</b> Bilateral Events as “Schocks”</a></li>
+<li class="chapter" data-level="4.2" data-path="arimax.html"><a href="arimax.html#arimax-1"><i class="fa fa-check"></i><b>4.2</b> ARIMAX</a></li>
+<li class="chapter" data-level="4.3" data-path="arimax.html"><a href="arimax.html#directional-arimax"><i class="fa fa-check"></i><b>4.3</b> Directional ARIMAX</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="arimax.html"><a href="arimax.html#korea-to-japan"><i class="fa fa-check"></i><b>4.3.1</b> Korea to Japan</a></li>
+<li class="chapter" data-level="4.3.2" data-path="arimax.html"><a href="arimax.html#japan-to-korea"><i class="fa fa-check"></i><b>4.3.2</b> Japan to Korea</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ritualized Hostility</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Ritualized Hostility</h1>
+</div>
+<div id="setup" class="section level1">
+<h1><span class="header-section-number">1</span> Setup</h1>
+<div id="cameo-coding-scheme" class="section level2">
+<h2><span class="header-section-number">1.1</span> CAMEO Coding Scheme</h2>
+<p>To translate CAMEO coding scheme into four more general categories, I rely on the mapping below for recoding.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Coding Scheme</span>
+neutral &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;010&quot;</span>,<span class="st">&quot;011&quot;</span>,<span class="st">&quot;012&quot;</span>,<span class="st">&quot;013&quot;</span>,<span class="st">&quot;014&quot;</span>,<span class="st">&quot;015&quot;</span>,<span class="st">&quot;016&quot;</span>,<span class="st">&quot;017&quot;</span>,<span class="st">&quot;018&quot;</span>,<span class="st">&quot;019&quot;</span>,<span class="st">&quot;020&quot;</span>,
+             <span class="st">&quot;022&quot;</span>,<span class="st">&quot;023&quot;</span>,<span class="st">&quot;025&quot;</span>,<span class="st">&quot;026&quot;</span>,<span class="st">&quot;027&quot;</span>, 
+             <span class="st">&quot;211&quot;</span>, <span class="st">&quot;212&quot;</span>, <span class="st">&quot;213&quot;</span>, <span class="st">&quot;214&quot;</span>, <span class="st">&quot;231&quot;</span>, <span class="st">&quot;233&quot;</span>,<span class="st">&quot;234&quot;</span>, <span class="st">&quot;241&quot;</span>,<span class="st">&quot;242&quot;</span>,<span class="st">&quot;243&quot;</span>, 
+             <span class="st">&quot;251&quot;</span>, <span class="st">&quot;252&quot;</span>, <span class="st">&quot;253&quot;</span>, <span class="st">&quot;256&quot;</span>)
+ver_coop &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;030&quot;</span>, <span class="st">&quot;031&quot;</span>, <span class="st">&quot;032&quot;</span>, <span class="st">&quot;033&quot;</span>, <span class="st">&quot;035&quot;</span>, <span class="st">&quot;036&quot;</span>, <span class="st">&quot;037&quot;</span>, <span class="st">&quot;038&quot;</span>, <span class="st">&quot;039&quot;</span>, 
+              <span class="st">&quot;040&quot;</span>, <span class="st">&quot;041&quot;</span>, <span class="st">&quot;042&quot;</span>, <span class="st">&quot;043&quot;</span>, <span class="st">&quot;044&quot;</span>, <span class="st">&quot;045&quot;</span>, <span class="st">&quot;046&quot;</span>, <span class="st">&quot;050&quot;</span>, <span class="st">&quot;051&quot;</span>, 
+              <span class="st">&quot;052&quot;</span>, <span class="st">&quot;053&quot;</span>, <span class="st">&quot;054&quot;</span>, <span class="st">&quot;055&quot;</span>, <span class="st">&quot;056&quot;</span>, <span class="st">&quot;057&quot;</span>,
+              <span class="st">&quot;311&quot;</span>, <span class="st">&quot;312&quot;</span>, <span class="st">&quot;313&quot;</span>, <span class="st">&quot;314&quot;</span>, <span class="st">&quot;331&quot;</span>, <span class="st">&quot;0331&quot;</span>, <span class="st">&quot;333&quot;</span>, <span class="st">&quot;341&quot;</span>, <span class="st">&quot;342&quot;</span>, <span class="st">&quot;353&quot;</span>)
+mat_coop &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;060&quot;</span>, <span class="st">&quot;061&quot;</span>, <span class="st">&quot;062&quot;</span>,<span class="st">&quot;063&quot;</span>, <span class="st">&quot;064&quot;</span>, <span class="st">&quot;070&quot;</span>, <span class="st">&quot;071&quot;</span>, <span class="st">&quot;072&quot;</span>, <span class="st">&quot;073&quot;</span>, 
+              <span class="st">&quot;074&quot;</span>, <span class="st">&quot;075&quot;</span>, <span class="st">&quot;080&quot;</span>, <span class="st">&quot;081&quot;</span>, 
+              <span class="st">&quot;811&quot;</span>, <span class="st">&quot;831&quot;</span>, <span class="st">&quot;833&quot;</span>, <span class="st">&quot;841&quot;</span>, <span class="st">&quot;842&quot;</span>, <span class="st">&quot;861&quot;</span>, <span class="st">&quot;871&quot;</span>, <span class="st">&quot;872&quot;</span>)
+ver_conf &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;090&quot;</span>, <span class="st">&quot;100&quot;</span>, <span class="st">&quot;101&quot;</span>, <span class="st">&quot;102&quot;</span>, <span class="st">&quot;105&quot;</span>, <span class="st">&quot;106&quot;</span>, <span class="st">&quot;107&quot;</span>, <span class="st">&quot;111&quot;</span>, <span class="st">&quot;112&quot;</span>, 
+              <span class="st">&quot;113&quot;</span>, <span class="st">&quot;114&quot;</span>, <span class="st">&quot;115&quot;</span>, <span class="st">&quot;120&quot;</span>, <span class="st">&quot;124&quot;</span>, <span class="st">&quot;125&quot;</span>, <span class="st">&quot;127&quot;</span>, <span class="st">&quot;128&quot;</span>, <span class="st">&quot;130&quot;</span>, 
+              <span class="st">&quot;131&quot;</span>, <span class="st">&quot;133&quot;</span>, <span class="st">&quot;134&quot;</span>, <span class="st">&quot;138&quot;</span>, <span class="st">&quot;139&quot;</span>, 
+              <span class="st">&quot;1011&quot;</span>, <span class="st">&quot;1014&quot;</span>, <span class="st">&quot;1031&quot;</span>, <span class="st">&quot;1041&quot;</span>, <span class="st">&quot;1043&quot;</span>, <span class="st">&quot;1213&quot;</span>, <span class="st">&quot;1221&quot;</span>, <span class="st">&quot;1231&quot;</span>, 
+              <span class="st">&quot;1232&quot;</span>, <span class="st">&quot;1233&quot;</span>, <span class="st">&quot;1241&quot;</span>, <span class="st">&quot;1312&quot;</span>, <span class="st">&quot;1313&quot;</span>, <span class="st">&quot;1621&quot;</span>)
+mat_conf &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;141&quot;</span>, <span class="st">&quot;1412&quot;</span>, <span class="st">&quot;142&quot;</span>, <span class="st">&quot;143&quot;</span>, <span class="st">&quot;145&quot;</span>, <span class="st">&quot;150&quot;</span>, <span class="st">&quot;151&quot;</span>, <span class="st">&quot;153&quot;</span>, <span class="st">&quot;160&quot;</span>,
+              <span class="st">&quot;161&quot;</span>, <span class="st">&quot;162&quot;</span>, <span class="st">&quot;163&quot;</span>, <span class="st">&quot;164&quot;</span>, <span class="st">&quot;170&quot;</span>, <span class="st">&quot;172&quot;</span>, <span class="st">&quot;173&quot;</span>, <span class="st">&quot;174&quot;</span>, <span class="st">&quot;175&quot;</span>, <span class="st">&quot;180&quot;</span>,
+              <span class="st">&quot;181&quot;</span>, <span class="st">&quot;182&quot;</span>, <span class="st">&quot;183&quot;</span>, <span class="st">&quot;185&quot;</span>, <span class="st">&quot;186&quot;</span>, <span class="st">&quot;190&quot;</span>, <span class="st">&quot;191&quot;</span>, <span class="st">&quot;192&quot;</span>, <span class="st">&quot;193&quot;</span>, <span class="st">&quot;194&quot;</span>, 
+              <span class="st">&quot;202&quot;</span>, 
+              <span class="st">&quot;1711&quot;</span>, <span class="st">&quot;1721&quot;</span>, <span class="st">&quot;1821&quot;</span>, <span class="st">&quot;1822&quot;</span>, <span class="st">&quot;1823&quot;</span>, <span class="st">&quot;2042&quot;</span>)</code></pre></div>
+<p>Because the entire volume of ICEWS is huge, I use the latest IECWS data (2017 January) <code>events.2016.20170206134701.tab</code> to test the steps of data manipulation before fully implementing all the methods.</p>
+<p>I did the following tasks:</p>
+<ul>
+<li>Selecte only events which Japan or South Korea was the source or target.</li>
+<li>Eliminate purely domestic events where Japan or South Korea were both the Source Country and the Target Country.</li>
+<li>Recode the <code>CAMEO</code> Code into 4 categories with the mapping shown above.</li>
+<li>Make<code>category</code> (0,1,2,3,4) a factor variable and <code>time</code> as a time variable.</li>
+<li>Generate a variable that records the directionality of each event.</li>
+</ul>
+</div>
+<div id="reading-icews-raw-data" class="section level2">
+<h2><span class="header-section-number">1.2</span> Reading ICEWS Raw Data</h2>
+<div id="icews-parser-function" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> ICEWS Parser Function</h3>
+</div>
+<div id="data-for-replication" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Data for Replication</h3>
+<p>Due to the large size and amount of time required to read, process, and merge the original <code>.tab</code> files, I export the results from the previous code chunk into a <code>.csv</code> file and read it directly, as shown below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">events &lt;-<span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;icews_parsed.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">category =</span> <span class="kw">factor</span>(category),
+    <span class="dt">time =</span> <span class="kw">as_date</span>(time)
+  )</code></pre></div>
+</div>
+</div>
+<div id="distribution-of-data-over-year" class="section level2">
+<h2><span class="header-section-number">1.3</span> Distribution of Data over Year</h2>
+<p>There are some issue with the <code>R</code> parser that leads to strange event counts compared to STATA.</p>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="using-stata" class="section level2">
+<h2><span class="header-section-number">1.4</span> Using STATA</h2>
+<p>By contrast, <code>STATA</code>’s parser has no issue with 2007, as shown in the graph. The remaining analysis will be conducted on the <code>ICEWS</code> data read in <code>STATA</code>.</p>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   eventid = col_integer(),
+##   eventdate = col_date(format = &quot;&quot;),
+##   cameocode = col_integer(),
+##   intensity = col_double(),
+##   storyid = col_integer(),
+##   sentencenumber = col_integer(),
+##   latitude = col_double(),
+##   longitude = col_double(),
+##   J2K = col_integer(),
+##   K2J = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="distribution-of-event-categories" class="section level2">
+<h2><span class="header-section-number">1.5</span> Distribution of Event Categories</h2>
+<p>One can see the distrubtion of event categories:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stata <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(category) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">category</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="right">6007</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">38992</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">353</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="right">4421</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="right">1031</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="right">19</td>
+</tr>
+</tbody>
+</table>
+<p>While in <code>events</code> each row is an event, I want each row to be a particular date with information of the frequency of an event of a particular type on that date.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">event_sum &lt;-<span class="st"> </span>stata <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(time,category) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">freq =</span> <span class="kw">sum</span>(freq)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">complete</span>(category, <span class="dt">fill=</span><span class="kw">list</span>(<span class="dt">freq=</span><span class="dv">0</span>))<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>(time)
+  <span class="co"># this does not work, need to merge first</span></code></pre></div>
+</div>
+<div id="daily-data" class="section level2">
+<h2><span class="header-section-number">1.6</span> Daily Data</h2>
+<p>Now I reshape the data frame to make each event category its own coloumn for Time Series analysis.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">time</th>
+<th align="right">neutral</th>
+<th align="right">ver_coop</th>
+<th align="right">mat_coop</th>
+<th align="right">ver_conf</th>
+<th align="right">mat_conf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1996-01-03</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-04</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-05</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-06</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-07</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-08</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div id="summary-statistics" class="section level3">
+<h3><span class="header-section-number">1.6.1</span> Summary Statistics</h3>
+<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Cmd+Shift+K</em> to preview the HTML file).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(event_transposed) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">time</th>
+<th align="center">neutral</th>
+<th align="center">ver_coop</th>
+<th align="center">mat_coop</th>
+<th align="center">ver_conf</th>
+<th align="center">mat_conf</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="center">Min. :1996-01-03</td>
+<td align="center">Min. : 0.000</td>
+<td align="center">Min. : 0.000</td>
+<td align="center">Min. :0.00000</td>
+<td align="center">Min. : 0.0000</td>
+<td align="center">Min. : 0.000</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">1st Qu.:2000-12-09</td>
+<td align="center">1st Qu.: 0.000</td>
+<td align="center">1st Qu.: 0.000</td>
+<td align="center">1st Qu.:0.00000</td>
+<td align="center">1st Qu.: 0.0000</td>
+<td align="center">1st Qu.: 0.000</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">Median :2005-11-16</td>
+<td align="center">Median : 0.000</td>
+<td align="center">Median : 2.000</td>
+<td align="center">Median :0.00000</td>
+<td align="center">Median : 0.0000</td>
+<td align="center">Median : 0.000</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">Mean :2005-11-16</td>
+<td align="center">Mean : 0.833</td>
+<td align="center">Mean : 5.407</td>
+<td align="center">Mean :0.04895</td>
+<td align="center">Mean : 0.6131</td>
+<td align="center">Mean : 0.143</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">3rd Qu.:2010-10-23</td>
+<td align="center">3rd Qu.: 1.000</td>
+<td align="center">3rd Qu.: 6.000</td>
+<td align="center">3rd Qu.:0.00000</td>
+<td align="center">3rd Qu.: 0.0000</td>
+<td align="center">3rd Qu.: 0.000</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">Max. :2015-09-30</td>
+<td align="center">Max. :29.000</td>
+<td align="center">Max. :259.000</td>
+<td align="center">Max. :9.00000</td>
+<td align="center">Max. :59.0000</td>
+<td align="center">Max. :28.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="time-series-across-categories-daily" class="section level3">
+<h3><span class="header-section-number">1.6.2</span> Time Series Across Categories (Daily)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">event_transposed <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(neutral<span class="op">:</span>mat_conf, <span class="dt">key=</span><span class="st">&quot;event&quot;</span>, <span class="dt">value=</span><span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>freq)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>event, <span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="the-first-difference-of-time-series-across-categories-daily" class="section level3">
+<h3><span class="header-section-number">1.6.3</span> The “First Difference” of Time Series Across Categories (Daily)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">event_transposed <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(neutral<span class="op">:</span>mat_conf, <span class="dt">key=</span><span class="st">&quot;event&quot;</span>, <span class="dt">value=</span><span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="kw">diff</span>(freq)))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>event, <span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+</div>
+<div id="weekly-data" class="section level2">
+<h2><span class="header-section-number">1.7</span> Weekly Data</h2>
+<div id="data-structure" class="section level3">
+<h3><span class="header-section-number">1.7.1</span> Data Structure</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">event_transposed_weekly &lt;-<span class="st"> </span>
+<span class="st">  </span>event_transposed <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time_week =</span> <span class="kw">floor_date</span>(time, <span class="st">&quot;week&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(time_week) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># I take out direction so it becomes dyadic</span>
+<span class="st">  </span><span class="kw">summarize</span>(
+    <span class="st">`</span><span class="dt">Neutral Event</span><span class="st">`</span>        =<span class="st"> </span><span class="kw">sum</span>(neutral),
+    <span class="st">`</span><span class="dt">Verbal Cooperation</span><span class="st">`</span>   =<span class="st"> </span><span class="kw">sum</span>(ver_coop),
+    <span class="st">`</span><span class="dt">Material Cooperation</span><span class="st">`</span> =<span class="st"> </span><span class="kw">sum</span>(mat_coop),
+    <span class="st">`</span><span class="dt">Verbal Conflict</span><span class="st">`</span>      =<span class="st"> </span><span class="kw">sum</span>(ver_conf),
+    <span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span>    =<span class="st"> </span><span class="kw">sum</span>(mat_conf)
+  )
+
+event_transposed_weekly <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>() <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">time_week</th>
+<th align="right">Neutral Event</th>
+<th align="right">Verbal Cooperation</th>
+<th align="right">Material Cooperation</th>
+<th align="right">Verbal Conflict</th>
+<th align="right">Material Conflict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1995-12-31</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-07</td>
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-14</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-01-21</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">1996-01-28</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">1996-02-04</td>
+<td align="right">4</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="time-series-across-categories-weekly" class="section level3">
+<h3><span class="header-section-number">1.7.2</span> Time Series Across Categories (Weekly)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">event_transposed_weekly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="st">`</span><span class="dt">Neutral Event</span><span class="st">`</span><span class="op">:</span><span class="st">`</span><span class="dt">Material Conflict</span><span class="st">`</span>, <span class="dt">key=</span><span class="st">&quot;event&quot;</span>, <span class="dt">value=</span><span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time_week, <span class="dt">y=</span>freq)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>event, <span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Time (in weeks)&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Frequency of Event Occurence&quot;</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/Weekly%20Time%20Series%20Plot-1.png" width="672" /></p>
+</div>
+<div id="summary-statistics-1" class="section level3">
+<h3><span class="header-section-number">1.7.3</span> Summary Statistics</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(event_transposed_weekly) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">time_week</th>
+<th align="left">Neutral Event</th>
+<th align="left">Verbal Cooperation</th>
+<th align="left">Material Cooperation</th>
+<th align="left">Verbal Conflict</th>
+<th align="left">Material Conflict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="center">Min. :1995-12-31</td>
+<td align="left">Min. : 0.000</td>
+<td align="left">Min. : 0.00</td>
+<td align="left">Min. : 0.0000</td>
+<td align="left">Min. : 0.000</td>
+<td align="left">Min. : 0</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">1st Qu.:2000-12-06</td>
+<td align="left">1st Qu.: 1.000</td>
+<td align="left">1st Qu.: 9.00</td>
+<td align="left">1st Qu.: 0.0000</td>
+<td align="left">1st Qu.: 0.000</td>
+<td align="left">1st Qu.: 0</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">Median :2005-11-13</td>
+<td align="left">Median : 3.000</td>
+<td align="left">Median : 21.00</td>
+<td align="left">Median : 0.0000</td>
+<td align="left">Median : 1.000</td>
+<td align="left">Median : 0</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">Mean :2005-11-13</td>
+<td align="left">Mean : 5.826</td>
+<td align="left">Mean : 37.82</td>
+<td align="left">Mean : 0.3424</td>
+<td align="left">Mean : 4.288</td>
+<td align="left">Mean : 1</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">3rd Qu.:2010-10-20</td>
+<td align="left">3rd Qu.: 8.000</td>
+<td align="left">3rd Qu.: 47.00</td>
+<td align="left">3rd Qu.: 0.0000</td>
+<td align="left">3rd Qu.: 4.000</td>
+<td align="left">3rd Qu.: 1</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">Max. :2015-09-27</td>
+<td align="left">Max. :72.000</td>
+<td align="left">Max. :539.00</td>
+<td align="left">Max. :20.0000</td>
+<td align="left">Max. :96.000</td>
+<td align="left">Max. :49</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="time-series-modeling.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

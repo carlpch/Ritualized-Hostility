@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ritualized Hostility</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Ritualized Hostility">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Ritualized Hostility" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ritualized Hostility" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="time-series-modeling.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#packages"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#cameo-coding-scheme"><i class="fa fa-check"></i><b>1.2</b> CAMEO Coding Scheme</a></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#reading-icews-raw-data"><i class="fa fa-check"></i><b>1.3</b> Reading ICEWS Raw Data</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#icews-parser-function"><i class="fa fa-check"></i><b>1.3.1</b> ICEWS Parser Function</a></li>
+<li class="chapter" data-level="1.3.2" data-path="setup.html"><a href="setup.html#original-code-for-loading-data"><i class="fa fa-check"></i><b>1.3.2</b> Original code for loading data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="setup.html"><a href="setup.html#data-for-replication"><i class="fa fa-check"></i><b>1.3.3</b> Data for Replication</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="outlook.html"><a href="outlook.html"><i class="fa fa-check"></i><b>2</b> Outlook</a><ul>
+<li class="chapter" data-level="2.1" data-path="outlook.html"><a href="outlook.html#distribution-of-data-over-year"><i class="fa fa-check"></i><b>2.1</b> Distribution of Data over Year</a></li>
+<li class="chapter" data-level="2.2" data-path="outlook.html"><a href="outlook.html#using-stata"><i class="fa fa-check"></i><b>2.2</b> Using STATA</a></li>
+<li class="chapter" data-level="2.3" data-path="outlook.html"><a href="outlook.html#distribution-of-event-categories"><i class="fa fa-check"></i><b>2.3</b> Distribution of Event Categories</a></li>
+<li class="chapter" data-level="2.4" data-path="outlook.html"><a href="outlook.html#daily-data"><i class="fa fa-check"></i><b>2.4</b> Daily Data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="outlook.html"><a href="outlook.html#summary-statistics"><i class="fa fa-check"></i><b>2.4.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.4.2" data-path="outlook.html"><a href="outlook.html#time-series-across-categories-daily"><i class="fa fa-check"></i><b>2.4.2</b> Time Series Across Categories (Daily)</a></li>
+<li class="chapter" data-level="2.4.3" data-path="outlook.html"><a href="outlook.html#the-first-difference-of-time-series-across-categories-daily"><i class="fa fa-check"></i><b>2.4.3</b> The “First Difference” of Time Series Across Categories (Daily)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="outlook.html"><a href="outlook.html#weekly-data"><i class="fa fa-check"></i><b>2.5</b> Weekly Data</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="outlook.html"><a href="outlook.html#data-structure"><i class="fa fa-check"></i><b>2.5.1</b> Data Structure</a></li>
+<li class="chapter" data-level="2.5.2" data-path="outlook.html"><a href="outlook.html#time-series-across-categories-weekly"><i class="fa fa-check"></i><b>2.5.2</b> Time Series Across Categories (Weekly)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="outlook.html"><a href="outlook.html#summary-statistics-1"><i class="fa fa-check"></i><b>2.5.3</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.5.4" data-path="outlook.html"><a href="outlook.html#hiding-verbal-cooperation"><i class="fa fa-check"></i><b>2.5.4</b> Hiding Verbal Cooperation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="time-series-modeling.html"><a href="time-series-modeling.html"><i class="fa fa-check"></i><b>3</b> Time Series Modeling</a><ul>
+<li class="chapter" data-level="3.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#setup-1"><i class="fa fa-check"></i><b>3.1</b> Setup</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#packages-1"><i class="fa fa-check"></i><b>3.1.1</b> Packages</a></li>
+<li class="chapter" data-level="3.1.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#selecting-time-frame-2007-has-issue-directionality-no-direction"><i class="fa fa-check"></i><b>3.1.2</b> Selecting Time Frame (2007 has issue) + Directionality (No-direction)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#testing-stationarity-with-augmented-dickey-fuller-test"><i class="fa fa-check"></i><b>3.2</b> Testing Stationarity with Augmented Dickey-Fuller Test</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-stationery"><i class="fa fa-check"></i><b>3.2.1</b> Verbal Conflict (Stationery)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-stationery"><i class="fa fa-check"></i><b>3.2.2</b> Verbal Cooperation (Stationery)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-stationery"><i class="fa fa-check"></i><b>3.2.3</b> Material Conflict (Stationery)</a></li>
+<li class="chapter" data-level="3.2.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-stationery"><i class="fa fa-check"></i><b>3.2.4</b> Material Cooperation (Stationery)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#specifying-autoregression-moving-average-arma"><i class="fa fa-check"></i><b>3.3</b> Specifying AutoRegression &amp; Moving Average (ARMA)</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-arma-17"><i class="fa fa-check"></i><b>3.3.1</b> Verbal Conflict (ARMA 1,7?)</a></li>
+<li class="chapter" data-level="3.3.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-arma-1"><i class="fa fa-check"></i><b>3.3.2</b> Verbal Cooperation (ARMA 1)</a></li>
+<li class="chapter" data-level="3.3.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-arima-101"><i class="fa fa-check"></i><b>3.3.3</b> Material Conflict (ARIMA 1,0,1)</a></li>
+<li class="chapter" data-level="3.3.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-arima-101"><i class="fa fa-check"></i><b>3.3.4</b> Material Cooperation (ARIMA 1,0,1)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="vector-autoregression.html"><a href="vector-autoregression.html"><i class="fa fa-check"></i><b>4</b> Vector Autoregression</a><ul>
+<li class="chapter" data-level="4.1" data-path="vector-autoregression.html"><a href="vector-autoregression.html#irf-model-1"><i class="fa fa-check"></i><b>4.1</b> IRF Model 1</a></li>
+<li class="chapter" data-level="4.2" data-path="vector-autoregression.html"><a href="vector-autoregression.html#irf-model-2"><i class="fa fa-check"></i><b>4.2</b> IRF Model 2</a></li>
+<li class="chapter" data-level="4.3" data-path="vector-autoregression.html"><a href="vector-autoregression.html#irf-model-3"><i class="fa fa-check"></i><b>4.3</b> 4.1.3 IRF Model 3</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ritualized Hostility</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vector-autoregression" class="section level1">
+<h1><span class="header-section-number">4</span> Vector Autoregression</h1>
+<ul>
+<li>Model 1: <code>verbal conflict</code> and <code>verbal cooperation</code></li>
+<li>Model 2: <code>verbal conflict</code> and <code>material conflict</code></li>
+<li>Model 3: <code>verbal conflict</code>, <code>verbal cooperation</code>, <code>verbal conflict</code> and <code>material conflict</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vars)</code></pre></div>
+<pre><code>## Loading required package: MASS</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre><code>## Loading required package: strucchange</code></pre>
+<pre><code>## Loading required package: sandwich</code></pre>
+<pre><code>## Loading required package: lmtest</code></pre>
+<pre><code>## Warning: package &#39;lmtest&#39; was built under R version 3.3.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">VARselect</span>(ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(ver_conf, ver_coop), 
+                    <span class="dt">lag.max =</span> <span class="dv">20</span>, <span class="dt">type=</span><span class="st">&quot;both&quot;</span>)</code></pre></div>
+<pre><code>## $selection
+## AIC(n)  HQ(n)  SC(n) FPE(n) 
+##     10      7      7     10 
+## 
+## $criteria
+##                  1           2           3           4           5
+## AIC(n)    7.178617    7.168743    7.162801    7.154803    7.143807
+## HQ(n)     7.183158    7.175555    7.171883    7.166156    7.157430
+## SC(n)     7.191415    7.187941    7.188397    7.186799    7.182202
+## FPE(n) 1311.093232 1298.212169 1290.520115 1280.240422 1266.239681
+##                  6           7           8           9          10
+## AIC(n)    7.129605    7.122142    7.122867    7.123004    7.119988
+## HQ(n)     7.145499    7.140306    7.143302    7.145710    7.144965
+## SC(n)     7.174399    7.173335    7.180459    7.186996    7.190379
+## FPE(n) 1248.384098 1239.101249 1240.000445 1240.171124 1236.436377
+##                 11          12          13          14          15
+## AIC(n)    7.121485    7.121298    7.120632    7.121839    7.122246
+## HQ(n)     7.148732    7.150816    7.152420    7.155898    7.158575
+## SC(n)     7.198274    7.204487    7.210220    7.217826    7.224632
+## FPE(n) 1238.287730 1238.056944 1237.232274 1238.727176 1239.231153
+##                 16          17          18          19          20
+## AIC(n)    7.124126    7.125556    7.124049    7.124183    7.125022
+## HQ(n)     7.162726    7.166426    7.167190    7.169595    7.172705
+## SC(n)     7.232912    7.240740    7.245632    7.252166    7.259404
+## FPE(n) 1241.563939 1243.340193 1241.468096 1241.634826 1242.677889</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">VARselect</span>(ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(ver_conf, mat_conf), 
+                    <span class="dt">lag.max =</span> <span class="dv">20</span>, <span class="dt">type=</span><span class="st">&quot;both&quot;</span>)</code></pre></div>
+<pre><code>## $selection
+## AIC(n)  HQ(n)  SC(n) FPE(n) 
+##      7      7      7      7 
+## 
+## $criteria
+##               1        2        3        4        5        6        7
+## AIC(n) 1.774444 1.761401 1.755925 1.748598 1.739468 1.723506 1.714692
+## HQ(n)  1.778985 1.768213 1.765007 1.759951 1.753092 1.739401 1.732857
+## SC(n)  1.787242 1.780599 1.781522 1.780594 1.777863 1.768300 1.765885
+## FPE(n) 5.897001 5.820588 5.788800 5.746541 5.694315 5.604145 5.554964
+##               8        9       10       11       12       13       14
+## AIC(n) 1.715973 1.716064 1.717385 1.718274 1.719011 1.717582 1.717250
+## HQ(n)  1.736408 1.738770 1.742362 1.745521 1.748529 1.749371 1.751309
+## SC(n)  1.773565 1.780055 1.787776 1.795063 1.802200 1.807170 1.813237
+## FPE(n) 5.562084 5.562591 5.569947 5.574898 5.579013 5.571046 5.569195
+##              15       16       17       18       19       20
+## AIC(n) 1.718439 1.719825 1.721136 1.721047 1.719758 1.720633
+## HQ(n)  1.754769 1.758425 1.762007 1.764189 1.765170 1.768316
+## SC(n)  1.820826 1.828610 1.836320 1.842631 1.847741 1.855015
+## FPE(n) 5.575825 5.583554 5.590881 5.590388 5.583184 5.588074</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">VARselect</span>(ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(ver_conf, ver_coop, mat_conf, mat_coop), 
+                    <span class="dt">lag.max =</span> <span class="dv">20</span>, <span class="dt">type=</span><span class="st">&quot;both&quot;</span>)</code></pre></div>
+<pre><code>## $selection
+## AIC(n)  HQ(n)  SC(n) FPE(n) 
+##      7      2      1      7 
+## 
+## $criteria
+##                 1          2          3          4          5          6
+## AIC(n)   5.679482   5.666373   5.658727   5.651347   5.644487   5.631937
+## HQ(n)    5.693105   5.689079   5.690515   5.692218   5.694440   5.690972
+## SC(n)    5.717877   5.730365   5.748315   5.766532   5.785268   5.798315
+## FPE(n) 292.797675 288.984551 286.783334 284.674834 282.728663 279.202602
+##                 7          8          9         10         11         12
+## AIC(n)   5.628502   5.634105   5.635937   5.634215   5.639642   5.643119
+## HQ(n)    5.696620   5.711305   5.722220   5.729580   5.744089   5.756649
+## SC(n)    5.820476   5.851676   5.879105   5.902979   5.934002   5.963076
+## FPE(n) 278.245309 279.808862 280.322239 279.840111 281.363060 282.343610
+##                13         14         15         16         17         18
+## AIC(n)   5.646170   5.649628   5.653986   5.657504   5.660722   5.661935
+## HQ(n)    5.768782   5.781323   5.794763   5.807364   5.819664   5.829959
+## SC(n)    5.991724   6.020779   6.050733   6.079847   6.108662   6.135471
+## FPE(n) 283.206721 284.188301 285.429951 286.436450 287.360308 287.709939
+##                19         20
+## AIC(n)   5.664200   5.667107
+## HQ(n)    5.841306   5.853297
+## SC(n)    6.163332   6.191837
+## FPE(n) 288.363122 289.203843</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model1 &lt;-<span class="st"> </span><span class="kw">VAR</span>(ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(ver_conf, ver_coop), <span class="dt">p=</span><span class="dv">10</span>, <span class="dt">type=</span><span class="st">&quot;both&quot;</span>)
+<span class="kw">causality</span>(model1, <span class="dt">cause=</span><span class="st">&quot;ver_conf&quot;</span>) <span class="co"># Verbal conflict Granger-causes verbal cooperation</span></code></pre></div>
+<pre><code>## $Granger
+## 
+##  Granger causality H0: ver_conf do not Granger-cause ver_coop
+## 
+## data:  VAR object model1
+## F-Test = 2.0254, df1 = 10, df2 = 7820, p-value = 0.02708
+## 
+## 
+## $Instant
+## 
+##  H0: No instantaneous causality between: ver_conf and ver_coop
+## 
+## data:  VAR object model1
+## Chi-squared = 97.333, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">causality</span>(model1, <span class="dt">cause=</span><span class="st">&quot;ver_coop&quot;</span>)</code></pre></div>
+<pre><code>## $Granger
+## 
+##  Granger causality H0: ver_coop do not Granger-cause ver_conf
+## 
+## data:  VAR object model1
+## F-Test = 1.2887, df1 = 10, df2 = 7820, p-value = 0.2303
+## 
+## 
+## $Instant
+## 
+##  H0: No instantaneous causality between: ver_coop and ver_conf
+## 
+## data:  VAR object model1
+## Chi-squared = 97.333, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model2 &lt;-<span class="st"> </span><span class="kw">VAR</span>(ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(ver_conf, mat_conf), <span class="dt">p=</span><span class="dv">7</span>, <span class="dt">type=</span><span class="st">&quot;both&quot;</span>)
+<span class="kw">causality</span>(model2, <span class="dt">cause=</span><span class="st">&quot;ver_conf&quot;</span>) <span class="co"># Feedback loop?</span></code></pre></div>
+<pre><code>## $Granger
+## 
+##  Granger causality H0: ver_conf do not Granger-cause mat_conf
+## 
+## data:  VAR object model2
+## F-Test = 12.553, df1 = 7, df2 = 7838, p-value = 4.441e-16
+## 
+## 
+## $Instant
+## 
+##  H0: No instantaneous causality between: ver_conf and mat_conf
+## 
+## data:  VAR object model2
+## Chi-squared = 165.77, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">causality</span>(model2, <span class="dt">cause=</span><span class="st">&quot;mat_conf&quot;</span>)</code></pre></div>
+<pre><code>## $Granger
+## 
+##  Granger causality H0: mat_conf do not Granger-cause ver_conf
+## 
+## data:  VAR object model2
+## F-Test = 3.7752, df1 = 7, df2 = 7838, p-value = 0.0004289
+## 
+## 
+## $Instant
+## 
+##  H0: No instantaneous causality between: mat_conf and ver_conf
+## 
+## data:  VAR object model2
+## Chi-squared = 165.77, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model3 &lt;-<span class="st"> </span><span class="kw">VAR</span>(ritualized_day <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(ver_conf, ver_coop, mat_conf, mat_coop), 
+              <span class="dt">p=</span><span class="dv">7</span>, <span class="dt">type=</span><span class="st">&quot;both&quot;</span>)
+<span class="kw">causality</span>(model3, <span class="dt">cause=</span><span class="st">&quot;ver_conf&quot;</span>) <span class="co"># Feedback loop?</span></code></pre></div>
+<pre><code>## $Granger
+## 
+##  Granger causality H0: ver_conf do not Granger-cause ver_coop
+##  mat_conf mat_coop
+## 
+## data:  VAR object model3
+## F-Test = 4.9195, df1 = 21, df2 = 15620, p-value = 8.364e-13
+## 
+## 
+## $Instant
+## 
+##  H0: No instantaneous causality between: ver_conf and ver_coop
+##  mat_conf mat_coop
+## 
+## data:  VAR object model3
+## Chi-squared = 229.34, df = 3, p-value &lt; 2.2e-16</code></pre>
+<div id="irf-model-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> IRF Model 1</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">irf_model1 &lt;-<span class="st"> </span><span class="kw">irf</span>(model1, <span class="dt">impulse =</span> <span class="st">&quot;ver_conf&quot;</span>, <span class="dt">response =</span> <span class="st">&quot;ver_coop&quot;</span>, 
+                  <span class="dt">boot=</span><span class="ot">TRUE</span>, <span class="dt">runs=</span><span class="dv">1000</span>, <span class="dt">n.ahead=</span><span class="dv">20</span>)
+irf_model1.<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw">irf</span>(model1, <span class="dt">impulse =</span> <span class="st">&quot;ver_coop&quot;</span>, <span class="dt">response =</span> <span class="st">&quot;ver_conf&quot;</span>, 
+                  <span class="dt">boot=</span><span class="ot">TRUE</span>, <span class="dt">runs=</span><span class="dv">1000</span>, <span class="dt">n.ahead=</span><span class="dv">20</span>)
+
+<span class="kw">plot</span>(irf_model1)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(irf_model1.<span class="dv">5</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-39-2.png" width="672" /></p>
+</div>
+<div id="irf-model-2" class="section level2">
+<h2><span class="header-section-number">4.2</span> IRF Model 2</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">irf_model2 &lt;-<span class="st"> </span><span class="kw">irf</span>(model2, <span class="dt">impulse =</span> <span class="st">&quot;ver_conf&quot;</span>, <span class="dt">response =</span> <span class="kw">c</span>(<span class="st">&quot;mat_conf&quot;</span>), 
+                  <span class="dt">boot=</span><span class="ot">TRUE</span>, <span class="dt">runs=</span><span class="dv">1000</span>, <span class="dt">n.ahead=</span><span class="dv">20</span>)
+irf_model2.<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw">irf</span>(model2, <span class="dt">impulse =</span> <span class="st">&quot;mat_conf&quot;</span>, <span class="dt">response =</span> <span class="kw">c</span>(<span class="st">&quot;ver_conf&quot;</span>), 
+                  <span class="dt">boot=</span><span class="ot">TRUE</span>, <span class="dt">runs=</span><span class="dv">1000</span>, <span class="dt">n.ahead=</span><span class="dv">20</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(irf_model2)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(irf_model2.<span class="dv">5</span>)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-40-2.png" width="672" /></p>
+</div>
+<div id="irf-model-3" class="section level2">
+<h2><span class="header-section-number">4.3</span> 4.1.3 IRF Model 3</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">irf_model3 &lt;-<span class="st"> </span><span class="kw">irf</span>(model3, <span class="dt">impulse =</span> <span class="st">&quot;ver_conf&quot;</span>, 
+                    <span class="dt">response =</span> <span class="kw">c</span>(<span class="st">&quot;ver_conf&quot;</span>, <span class="st">&quot;ver_coop&quot;</span>, <span class="st">&quot;mat_conf&quot;</span>, <span class="st">&quot;mat_coop&quot;</span>), 
+                  <span class="dt">boot=</span><span class="ot">TRUE</span>, <span class="dt">runs=</span><span class="dv">1000</span>, <span class="dt">n.ahead=</span><span class="dv">20</span>)
+
+<span class="kw">plot</span>(irf_model3)</code></pre></div>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="time-series-modeling.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

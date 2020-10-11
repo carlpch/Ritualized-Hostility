@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ritualized Hostility</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Ritualized Hostility">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Ritualized Hostility" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ritualized Hostility" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="setup-data-structure.html">
+<link rel="next" href="vector-autoregression-var.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="setup-data-structure.html"><a href="setup-data-structure.html"><i class="fa fa-check"></i><b>1</b> Setup &amp; Data Structure</a><ul>
+<li class="chapter" data-level="1.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#cameo-coding-scheme"><i class="fa fa-check"></i><b>1.1</b> CAMEO Coding Scheme</a></li>
+<li class="chapter" data-level="1.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#reading-icews-raw-data"><i class="fa fa-check"></i><b>1.2</b> Reading ICEWS Raw Data</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#icews-parser-function"><i class="fa fa-check"></i><b>1.2.1</b> ICEWS Parser Function</a></li>
+<li class="chapter" data-level="1.2.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#data-for-replication"><i class="fa fa-check"></i><b>1.2.2</b> Data for Replication</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="setup-data-structure.html"><a href="setup-data-structure.html#distribution-of-data-over-year"><i class="fa fa-check"></i><b>1.3</b> Distribution of Data over Year</a></li>
+<li class="chapter" data-level="1.4" data-path="setup-data-structure.html"><a href="setup-data-structure.html#using-stata"><i class="fa fa-check"></i><b>1.4</b> Using STATA</a></li>
+<li class="chapter" data-level="1.5" data-path="setup-data-structure.html"><a href="setup-data-structure.html#distribution-of-event-categories"><i class="fa fa-check"></i><b>1.5</b> Distribution of Event Categories</a></li>
+<li class="chapter" data-level="1.6" data-path="setup-data-structure.html"><a href="setup-data-structure.html#daily-data"><i class="fa fa-check"></i><b>1.6</b> Daily Data</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#summary-statistics"><i class="fa fa-check"></i><b>1.6.1</b> Summary Statistics</a></li>
+<li class="chapter" data-level="1.6.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#time-series-across-categories-daily"><i class="fa fa-check"></i><b>1.6.2</b> Time Series Across Categories (Daily)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="setup-data-structure.html"><a href="setup-data-structure.html#the-first-difference-of-time-series-across-categories-daily"><i class="fa fa-check"></i><b>1.6.3</b> The “First Difference” of Time Series Across Categories (Daily)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="setup-data-structure.html"><a href="setup-data-structure.html#weekly-data"><i class="fa fa-check"></i><b>1.7</b> Weekly Data</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="setup-data-structure.html"><a href="setup-data-structure.html#data-structure"><i class="fa fa-check"></i><b>1.7.1</b> Data Structure</a></li>
+<li class="chapter" data-level="1.7.2" data-path="setup-data-structure.html"><a href="setup-data-structure.html#time-series-across-categories-weekly"><i class="fa fa-check"></i><b>1.7.2</b> Time Series Across Categories (Weekly)</a></li>
+<li class="chapter" data-level="1.7.3" data-path="setup-data-structure.html"><a href="setup-data-structure.html#summary-statistics-1"><i class="fa fa-check"></i><b>1.7.3</b> Summary Statistics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="time-series-modeling.html"><a href="time-series-modeling.html"><i class="fa fa-check"></i><b>2</b> Time Series Modeling</a><ul>
+<li class="chapter" data-level="2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#unit-root-test"><i class="fa fa-check"></i><b>2.1</b> Unit Root Test</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-stationary"><i class="fa fa-check"></i><b>2.1.1</b> Verbal Conflict (Stationary)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-stationary"><i class="fa fa-check"></i><b>2.1.2</b> Verbal Cooperation (Stationary)</a></li>
+<li class="chapter" data-level="2.1.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-stationary"><i class="fa fa-check"></i><b>2.1.3</b> Material Conflict (Stationary)</a></li>
+<li class="chapter" data-level="2.1.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-stationary"><i class="fa fa-check"></i><b>2.1.4</b> Material Cooperation (Stationary)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#specifying-autoregression-moving-average-arma"><i class="fa fa-check"></i><b>2.2</b> Specifying AutoRegression &amp; Moving Average (ARMA)</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-conflict-arma-17"><i class="fa fa-check"></i><b>2.2.1</b> Verbal Conflict (ARMA 1,7?)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="time-series-modeling.html"><a href="time-series-modeling.html#verbal-cooperation-arma-1"><i class="fa fa-check"></i><b>2.2.2</b> Verbal Cooperation (ARMA 1)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-conflict-arima-101"><i class="fa fa-check"></i><b>2.2.3</b> Material Conflict (ARIMA 1,0,1)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="time-series-modeling.html"><a href="time-series-modeling.html#material-cooperation-arima-101"><i class="fa fa-check"></i><b>2.2.4</b> Material Cooperation (ARIMA 1,0,1)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html"><i class="fa fa-check"></i><b>3</b> Vector Autoregression (VAR)</a><ul>
+<li class="chapter" data-level="3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#model-presentation"><i class="fa fa-check"></i><b>3.1</b> Model Presentation</a></li>
+<li class="chapter" data-level="3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#selecting-lags-for-var"><i class="fa fa-check"></i><b>3.2</b> Selecting Lags for VAR</a></li>
+<li class="chapter" data-level="3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-causality-test"><i class="fa fa-check"></i><b>3.3</b> Granger Causality Test</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-1"><i class="fa fa-check"></i><b>3.3.1</b> Granger: Model 1</a></li>
+<li class="chapter" data-level="3.3.2" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-2"><i class="fa fa-check"></i><b>3.3.2</b> Granger: Model 2</a></li>
+<li class="chapter" data-level="3.3.3" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#granger-model-3"><i class="fa fa-check"></i><b>3.3.3</b> Granger: Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-1"><i class="fa fa-check"></i><b>3.4</b> IRF Model 1</a></li>
+<li class="chapter" data-level="3.5" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-2"><i class="fa fa-check"></i><b>3.5</b> IRF Model 2</a></li>
+<li class="chapter" data-level="3.6" data-path="vector-autoregression-var.html"><a href="vector-autoregression-var.html#irf-model-3"><i class="fa fa-check"></i><b>3.6</b> IRF Model 3</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="arimax.html"><a href="arimax.html"><i class="fa fa-check"></i><b>4</b> ARIMAX</a><ul>
+<li class="chapter" data-level="4.1" data-path="arimax.html"><a href="arimax.html#bilateral-events-as-schocks"><i class="fa fa-check"></i><b>4.1</b> Bilateral Events as “Schocks”</a></li>
+<li class="chapter" data-level="4.2" data-path="arimax.html"><a href="arimax.html#arimax-1"><i class="fa fa-check"></i><b>4.2</b> ARIMAX</a></li>
+<li class="chapter" data-level="4.3" data-path="arimax.html"><a href="arimax.html#directional-arimax"><i class="fa fa-check"></i><b>4.3</b> Directional ARIMAX</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="arimax.html"><a href="arimax.html#korea-to-japan"><i class="fa fa-check"></i><b>4.3.1</b> Korea to Japan</a></li>
+<li class="chapter" data-level="4.3.2" data-path="arimax.html"><a href="arimax.html#japan-to-korea"><i class="fa fa-check"></i><b>4.3.2</b> Japan to Korea</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ritualized Hostility</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="time-series-modeling" class="section level1">
+<h1><span class="header-section-number">2</span> Time Series Modeling</h1>
+<p>Note-to-self: should I consider changing each time-series vector using something like vector &lt;- <code>ts(vector,  frequency = frequency)</code>? Got this thought from <a href="http://stats.stackexchange.com/questions/266036/modeling-a-time-series-with-diminishing-seasonality" class="uri">http://stats.stackexchange.com/questions/266036/modeling-a-time-series-with-diminishing-seasonality</a>. While this did not solve seasonality as expected, …</p>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## Loading required package: timeDate</code></pre>
+<pre><code>## This is forecast 7.3</code></pre>
+<div id="unit-root-test" class="section level2">
+<h2><span class="header-section-number">2.1</span> Unit Root Test</h2>
+<div id="verbal-conflict-stationary" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Verbal Conflict (Stationary)</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-13">Table 2.1: </span>Unit Root Test of “Verbal Conflict” (max lags set to 30 with trend and drift term included)</caption>
+<thead>
+<tr class="header">
+<th align="right">Test Statistics</th>
+<th align="right">10pct</th>
+<th align="right">5pct</th>
+<th align="right">1pct</th>
+<th align="left">Integrated at 95% level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-10.39</td>
+<td align="right">-3.12</td>
+<td align="right">-3.41</td>
+<td align="right">-3.96</td>
+<td align="left">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="verbal-cooperation-stationary" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Verbal Cooperation (Stationary)</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-14">Table 2.2: </span>Unit Root Test of “Verbal Cooperation” (max lags set to 30 with trend and drift term included)</caption>
+<thead>
+<tr class="header">
+<th align="right">Test Statistics</th>
+<th align="right">10pct</th>
+<th align="right">5pct</th>
+<th align="right">1pct</th>
+<th align="left">Integrated at 95% level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-16.99</td>
+<td align="right">-3.12</td>
+<td align="right">-3.41</td>
+<td align="right">-3.96</td>
+<td align="left">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="material-conflict-stationary" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Material Conflict (Stationary)</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-15">Table 2.3: </span>Unit Root Test of “Material Conflict” (max lags set to 30 with trend and drift term included)</caption>
+<thead>
+<tr class="header">
+<th align="right">Test Statistics</th>
+<th align="right">10pct</th>
+<th align="right">5pct</th>
+<th align="right">1pct</th>
+<th align="left">Integrated at 95% level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-21.05</td>
+<td align="right">-3.12</td>
+<td align="right">-3.41</td>
+<td align="right">-3.96</td>
+<td align="left">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="material-cooperation-stationary" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Material Cooperation (Stationary)</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-16">Table 2.4: </span>Unit Root Test of “Material Cooperation” (max lags set to 30 with trend and drift term included)</caption>
+<thead>
+<tr class="header">
+<th align="right">Test Statistics</th>
+<th align="right">10pct</th>
+<th align="right">5pct</th>
+<th align="right">1pct</th>
+<th align="left">Integrated at 95% level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-28.37</td>
+<td align="right">-3.12</td>
+<td align="right">-3.41</td>
+<td align="right">-3.96</td>
+<td align="left">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="specifying-autoregression-moving-average-arma" class="section level2">
+<h2><span class="header-section-number">2.2</span> Specifying AutoRegression &amp; Moving Average (ARMA)</h2>
+<div id="verbal-conflict-arma-17" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Verbal Conflict (ARMA 1,7?)</h3>
+<div id="acf-pacf" class="section level4">
+<h4><span class="header-section-number">2.2.1.1</span> ACF &amp; PACF</h4>
+<p>Does it look like seasonality?</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.3043</td>
+<td align="right">0.0878</td>
+<td align="right">3.4643</td>
+<td align="right">0.0005</td>
+</tr>
+<tr class="even">
+<td align="left">factor(ritualized_day$wday)2</td>
+<td align="right">0.5319</td>
+<td align="right">0.1242</td>
+<td align="right">4.2816</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(ritualized_day$wday)3</td>
+<td align="right">0.7645</td>
+<td align="right">0.1242</td>
+<td align="right">6.1567</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(ritualized_day$wday)4</td>
+<td align="right">0.6386</td>
+<td align="right">0.1242</td>
+<td align="right">5.1422</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(ritualized_day$wday)5</td>
+<td align="right">0.6645</td>
+<td align="right">0.1242</td>
+<td align="right">5.3493</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(ritualized_day$wday)6</td>
+<td align="right">0.7334</td>
+<td align="right">0.1242</td>
+<td align="right">5.9042</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(ritualized_day$wday)7</td>
+<td align="right">0.0273</td>
+<td align="right">0.1242</td>
+<td align="right">0.2198</td>
+<td align="right">0.8260</td>
+</tr>
+</tbody>
+</table>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="fitting" class="section level4">
+<h4><span class="header-section-number">2.2.1.2</span> Fitting</h4>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  vconf$residuals
+## X-squared = 0.097, df = 1, p-value = 0.8</code></pre>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /><img src="ritualized_main_files/figure-html/unnamed-chunk-19-2.png" width="672" /><img src="ritualized_main_files/figure-html/unnamed-chunk-19-3.png" width="672" /></p>
+</div>
+</div>
+<div id="verbal-cooperation-arma-1" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Verbal Cooperation (ARMA 1)</h3>
+<div id="acf" class="section level4">
+<h4><span class="header-section-number">2.2.2.1</span> ACF</h4>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="fitting-arma" class="section level4">
+<h4><span class="header-section-number">2.2.2.2</span> Fitting ARMA</h4>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  vcoop$residuals
+## X-squared = 0.14, df = 1, p-value = 0.7</code></pre>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+</div>
+<div id="material-conflict-arima-101" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Material Conflict (ARIMA 1,0,1)</h3>
+<div id="acf-1" class="section level4">
+<h4><span class="header-section-number">2.2.3.1</span> ACF</h4>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="fitting-1" class="section level4">
+<h4><span class="header-section-number">2.2.3.2</span> Fitting</h4>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  mconf$residuals
+## X-squared = 6e-04, df = 1, p-value = 1</code></pre>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+</div>
+<div id="material-cooperation-arima-101" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Material Cooperation (ARIMA 1,0,1)</h3>
+<div id="acf-2" class="section level4">
+<h4><span class="header-section-number">2.2.4.1</span> ACF</h4>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="fitting-2" class="section level4">
+<h4><span class="header-section-number">2.2.4.2</span> Fitting</h4>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  mcoop$residuals
+## X-squared = 0.073, df = 1, p-value = 0.8</code></pre>
+<p><img src="ritualized_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="setup-data-structure.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vector-autoregression-var.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>
