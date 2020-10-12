@@ -1,0 +1,27 @@
+Attributes
+Provocative behavior of country B:The ruling party in country B sent high level governmental official to attend the National Territorial Day and claim their territorial rights. Protesters from your country on the scene were arrested by country B,The government of country B announced that the disputed territory will be included in its annual defense white paper in the following year,The president of country B made an official visit to the disputed territory,The military of country B just conducted a shooting exercise on the disputed territory
+Which side is in control of the disputed territory:your country has effective control,country B has effective control
+Previous provocations 1:It is the first time that country B has done this provocation,It is the third time that country B has done this provocation,It is the fifth time that country B has done this provocation,It is the seventh time that country B has done this provocation,It is the ninth time that country B has done this provocation,It is the eleventh time that country B has done this provocation
+Previous provocations 2:&nbsp;,Previous provocations have always occurred annually and on the same day in previous years,Previous provocations have been sporadic in the last few years
+Domestic political institution:country B is a democratic state,country B is a non-democracy
+Bilateral trade relations:country B is a key trade partner of country A,country B is not a key trade partner with country A
+Cultural and religious difference:country B shares common language and major religion with country A,country B has no common language nor religion with country A
+Regional security relations:country A and country B are regional security partners,country A and country B have no regional security ties
+Weights
+Provocative behavior of country B:0.25,0.25,0.25,0.25
+Which side is in control of the disputed territory:0.5,0.5
+Previous provocations 1:0.166666666667,0.166666666667,0.166666666667,0.166666666667,0.166666666667,0.166666666667
+Previous provocations 2:0.333333333333,0.333333333333,0.333333333333
+Domestic political institution:0.5,0.5
+Bilateral trade relations:0.5,0.5
+Cultural and religious difference:0.5,0.5
+Regional security relations:0.5,0.5
+Restrictions
+Which side is in control of the disputed territory:your country has effective control;Provocative behavior of country B:The military of country B just conducted a shooting exercise on the disputed territory
+Which side is in control of the disputed territory:country B has effective control;Provocative behavior of country B:The government of country B announced that the disputed territory will be included in its annual defense white paper in the following year
+Previous provocations 1:It is the first time that country B has done this provocation;Previous provocations 2:Previous provocations have been sporadically in the last few years
+Previous provocations 1:It is the third time that country B has done this provocation;Previous provocations 2:&nbsp
+Previous provocations 1:It is the fifth time that country B has done this provocation;Previous provocations 2:&nbsp
+Previous provocations 1:It is the seventh time that country B has done this provocation;Previous provocations 2:&nbsp
+Previous provocations 1:It is the ninth time that country B has done this provocation;Previous provocations 2:&nbsp
+Previous provocations 1:It is the eleventh time that country B has done this provocation;Previous provocations 2:&nbsp
